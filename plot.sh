@@ -27,7 +27,7 @@ plot_run () {
   output_path=$plot_directory/$run_name
 
   velociraptor-plot \
-    -c auto_plotter_config.yml \
+    -c auto_plotter.yml \
     -r registration.py \
     -p $catalogue_path \
     -o $output_path \
