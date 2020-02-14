@@ -55,6 +55,7 @@ create_summary_plot () {
 
   output_path=$plot_directory/$run_name
 
+  old_directory=$(pwd)
   cd $output_path
 
   python3 ../../data_conversion/parameters.py "../../${run_directory}/eagle_25.yml"
@@ -68,7 +69,7 @@ create_summary_plot () {
     stellar_mass_black_hole_mass_30.png \
     stellar_mass_specific_sfr_30.png \
     stellar_mass_passive_fraction_30.png \
-    StarFormationHistory.png \
+    star_formation_history.png \
     montage.png
 
   convert montage.png \
@@ -87,6 +88,8 @@ create_summary_plot () {
 
   rm temp*.png
   rm montage*.png
+
+  cd $old_directory
 }
 
 export -f plot_run create_summary_plot
