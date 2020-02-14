@@ -7,7 +7,7 @@ import numpy as np
 import sys
 
 with open(sys.argv[1], "r") as handle:
-    input_data = yaml.load(handle)
+    input_data = yaml.load(handle, Loader=yaml.Loader)
 
 parameter_output_filename = "parameters.txt"
 

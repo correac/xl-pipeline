@@ -6,7 +6,7 @@ import yaml
 import numpy as np
 
 with open("data.yml", "r") as handle:
-    input_data = yaml.load(handle)
+    input_data = yaml.load(handle, Loader=yaml.Loader)
 
 smf_output_name = "GSMF.txt"
 sizes_output_name = "GalaxySizes.txt"
