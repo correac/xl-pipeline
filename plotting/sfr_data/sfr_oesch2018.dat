@@ -1,0 +1,8 @@
+# cosmic star formation rate density from Oesch et al. (2018)
+#   IR data
+#   cosmology is H0=70, OmegaM=0.3 OmegaL=0.7
+#   Uses a Salpeter IMF 0.1 - 125
+#   z   sfrd (Msol/yr/Mpc^3)   sfrderror_up  _down
+10.2     -3.29               0.16        -0.16
+100.0    -10.                0.1         -0.1
+

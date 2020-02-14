@@ -1,0 +1,8 @@
+# cosmic star formation rate density from KArim et al 2011.
+#   based on COSMOS + VLA cross-correlation
+#   values are corrected for faint galaxy contribution.
+#   cosmology is H0=70, OmegaM=0.3 OmegaL=0.7
+#   Uses a Salpeter IMF
+#   z   sfrd (Msol/yr/Mpc^3)   sfrderror_up  _down
+7.0     -2.00                   0.10        -0.11
+8.0     -2.11                   0.14        -0.14

@@ -1,0 +1,11 @@
+# cosmic star formation rate density from Magnelli et al. (2013)
+#   IR data
+#   cosmology is H0=70, OmegaM=0.3 OmegaL=0.7
+#   Uses a Salpeter IMF  
+#   z   sfrd (Msol/yr/Mpc^3)   sfrderror_up  _down
+0.55    -1.22   0.08    -0.11
+0.85    -1.10   0.10    -0.13
+1.15    -0.96   0.13    -0.20
+1.55    -0.94   0.13    -0.18
+2.05    -0.80   0.18    -0.15
+
