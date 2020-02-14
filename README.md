@@ -22,6 +22,21 @@ pip3 install -r requirements.txt
 
 This you will now have all of the required packages installed.
 
+You will also need to initialise and load the submodule with the
+comparison data:
+
+```
+git submodule update --init --recursive
+```
+
+Then, to generate the comparison data;
+
+```
+cd velociraptor-comparison-data
+bash convert.sh
+cd ..
+```
+
 Then you should look at `run.sh` and adapt it for your needs;
 do you just want to run the pipeline on one simulation, or several?
 In the latter case, you should use GNU `parallel` to parallelise
