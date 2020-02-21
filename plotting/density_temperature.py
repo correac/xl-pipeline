@@ -98,7 +98,7 @@ if __name__ == "__main__":
     snapshot_name = sys.argv[3]
     output_path = sys.argv[4]
 
-    snasphot_filename = f"{simulation}/{snapshot_path}"
+    snasphot_filename = f"{run_directory}/{snapshot_name}"
 
     make_single_image(
         snapshot_filename,
