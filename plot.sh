@@ -40,6 +40,12 @@ plot_run () {
     $run_directory \
     $snapshot_name \
     $output_path
+
+  python3 plotting/density_temperature.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
 }
 
 # Creates a summary plot based on the above created figures, and converts
@@ -63,11 +69,11 @@ create_summary_plot () {
   magick montage -geometry +4+4 \
     stellar_mass_function_30.png \
     stellar_mass_halo_mass_100.png \
-    stellar_mass_sfr_30.png \
     stellar_mass_galaxy_size_30.png \
     stellar_mass_black_hole_mass_30.png \
     stellar_mass_specific_sfr_30.png \
     stellar_mass_passive_fraction_30.png \
+    DensityTemeperature.png \
     StarFormationHistory.png \
     montage.png
 
