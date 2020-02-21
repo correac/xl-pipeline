@@ -18,8 +18,7 @@ temperature_bounds = [10 ** (2), 10 ** (9.5)]  # in K
 bins = 256
 
 # Plotting controls
-cmap = "viridis"
-
+plt.style.use("mnras.mplstyle")
 
 def get_data(filename):
     """
