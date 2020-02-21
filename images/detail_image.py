@@ -18,8 +18,6 @@ from swiftsimio.visualisation.smoothing_length_generation import (
     generate_smoothing_lengths,
 )
 
-from tqdm import tqdm
-
 import sys
 import unyt
 
@@ -34,13 +32,13 @@ velociraptor_groups = velociraptor_base_name.replace("properties", "catalog_grou
 
 filenames = {
     "parttypes_filename": velociraptor_base_name.replace(
-        "properties", "catalog_parttypes"
+        "properties", "catalog_partypes"
     ),
     "particles_filename": velociraptor_base_name.replace(
         "properties", "catalog_particles"
     ),
     "unbound_parttypes_filename": velociraptor_base_name.replace(
-        "properties", "catalog_parttypes.unbound"
+        "properties", "catalog_partypes.unbound"
     ),
     "unbound_particles_filename": velociraptor_base_name.replace(
         "properties", "catalog_particles.unbound"
@@ -73,7 +71,7 @@ def latex_float(f):
         return float_str
 
 
-for halo_id in tqdm(halo_ids):
+for halo_id in halo_ids:
     particles, unbound_particles = groups.extract_halo(halo_id, filenames=filenames)
 
     halo_mass = catalogue.masses.mass_200mean[halo_id].to("Solar_Mass")

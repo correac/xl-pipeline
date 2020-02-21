@@ -14,7 +14,7 @@ import sys
 
 from swiftsimio import load
 
-from plotting.load_sfh_data import read_obs_data
+from load_sfh_data import read_obs_data
 
 sfr_output_units = unyt.msun / (unyt.year * unyt.Mpc ** 3)
 
@@ -25,10 +25,8 @@ run_directory = sys.argv[2]
 snapshot_name = sys.argv[3]
 output_path = sys.argv[4]
 
-simulations
-
 sfr_filename = f"{run_directory}/SFR.txt"
-snapshot_filename = f"{simulation}/{snapshot_path}"
+snapshot_filename = f"{run_directory}/{snapshot_name}"
 
 data = np.genfromtxt(sfr_filename).T
 
@@ -37,7 +35,7 @@ units = snapshot.units
 boxsize = snapshot.metadata.boxsize
 box_volume = boxsize[0] * boxsize[1] * boxsize[2]
 
-sfr_units = initial_snapshot.gas.star_formation_rates.units
+sfr_units = snapshot.gas.star_formation_rates.units
 
 # a, Redshift, SFR
 scale_factor = data[2]
@@ -52,7 +50,7 @@ ax.loglog()
 
 
 # High z-order as we always want these to be on top of the observations
-ax.plot(scale_factor, sfr.value, label=name, zorder=10000)[0]
+ax.plot(scale_factor, star_formation_rate.value, zorder=10000)[0]
 
 # Observational data plotting
 
@@ -130,9 +128,9 @@ ax.set_xlim(1.02, 0.07)
 ax.set_ylim(1.8e-4, 1.7)
 
 observation_legend = ax.legend(
-    observation_lines, observation_labels, markerfirst=True, loc=3, fontsize=6, ncol=2
+    observation_lines, observation_labels, markerfirst=True, loc=3, fontsize=4, ncol=2
 )
 
 fig.tight_layout()
 
-fig.savefig("{output_path}/StarFormationHistory.png")
+fig.savefig(f"{output_path}/star_formation_history.png")

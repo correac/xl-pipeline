@@ -7,6 +7,9 @@ source modules.sh
 source plot.sh
 source image.sh
 
+# You should have a python environment with requirements.txt installed
+source env/bin/activate
+
 # First up, an example for running the scripts on one at a time
 run_directory="Runs/Run1"
 run_name="Run1"
@@ -14,6 +17,7 @@ plot_directory="Plots"
 snapshot_name="eagle_0036.hdf5"
 catalogue_name="stf/eagle_0036.properties.0"
 
+mkdir -p $plot_directory/$run_name
 plot_run $run_directory $run_name $plot_directory $snapshot_name $catalogue_name
 create_summary_plot $run_directory $run_name $plot_directory $snapshot_name $catalogue_name
 image_run $run_directory $run_name $plot_directory $snapshot_name $catalogue_name
@@ -26,6 +30,8 @@ plot_single_run () {
   plot_directory="Plots"
   snapshot_name="eagle_0036.hdf5"
   catalogue_name="stf/eagle_0036.properties.0"
+
+  mkdir -p $plot_directory/$run_name
 
   # Check if run exists before doing any of this stuff!
   if [[ -f $run_directory/$snapshot_name ]]

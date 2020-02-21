@@ -1,3 +1,8 @@
 swiftsimio
 velociraptor
+matplotlib
+astropy
+pyyaml
+cmocean
+scipy
 numba

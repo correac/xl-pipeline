@@ -87,7 +87,7 @@ def make_single_image(filename, density_bounds, temperature_bounds, bins, output
 
     fig.tight_layout()
 
-    fig.savefig("{output_path}/DensityTemperature.png")
+    fig.savefig("{output_path}/density_temperature.png")
 
     return
 
