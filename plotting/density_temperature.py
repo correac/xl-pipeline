@@ -104,6 +104,7 @@ if __name__ == "__main__":
         snapshot_filename,
         density_bounds,
         temperature_bounds,
+        bins,
         output_path
     )
 
