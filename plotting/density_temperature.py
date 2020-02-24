@@ -5,15 +5,14 @@ Makes a rho-T plot. Uses the swiftsimio library.
 import matplotlib.pyplot as plt
 import numpy as np
 
-from swiftsimio import SWIFTDataset, SWIFTMetadata, SWIFTUnits
+from swiftsimio import load
 
 from unyt import mh, cm, Gyr
-from tqdm import tqdm
 from matplotlib.colors import LogNorm
 from matplotlib.animation import FuncAnimation
 
 # Constants; these could be put in the parameter file but are rarely changed.
-density_bounds = [1e-9, 1e4]  # in nh/cm^3
+density_bounds = [10**(-9.5), 1e4]  # in nh/cm^3
 temperature_bounds = [10 ** (2), 10 ** (9.5)]  # in K
 bins = 256
 
@@ -25,12 +24,15 @@ def get_data(filename):
     Grabs the data (T in Kelvin and density in mh / cm^3).
     """
 
-    data = SWIFTDataset(filename)
+    data = load(filename)
+    
+    density_factor = float(data.gas.densities.cosmo_factor.a_factor)
+    temperature_factor = float(data.gas.temperatures.cosmo_factor.a_factor)
 
-    data.gas.density.convert_to_units(mh / (cm ** 3))
-    data.gas.temperature.convert_to_cgs()
+    number_density = (data.gas.densities * (density_factor / mh)).to(cm**-3)
+    temperature = (data.gas.temperatures * temperature_factor).to("K")
 
-    return data.gas.density / (data.metadata.scale_factor ** 3), data.gas.temperature
+    return number_density.value, temperature.value
 
 
 def make_hist(filename, density_bounds, temperature_bounds, bins):
@@ -59,7 +61,7 @@ def setup_axes():
     """
     Creates the figure and axis object.
     """
-    fig, ax = plt.subplots(1, figsize=(6, 5), dpi=300)
+    fig, ax = plt.subplots(1)
 
     ax.set_xlabel("Density [$n_H$ cm$^{-3}$]")
     ax.set_ylabel("Temperature [K]")
@@ -71,22 +73,20 @@ def setup_axes():
 
 def make_single_image(filename, density_bounds, temperature_bounds, bins, output_path):
     """
-    Makes a single image and saves it to rhoTPlot_{filename}.png.
-    
-    Filename should be given _without_ hdf5 extension.
+    Makes a single plot of rho-T
     """
 
     fig, ax = setup_axes()
     hist, d, T = make_hist(
-        "{:s}.hdf5".format(filename), density_bounds, temperature_bounds, bins
+        filename, density_bounds, temperature_bounds, bins
     )
 
-    mappable = ax.pcolormesh(d, T, hist, cmap=cmap, norm=LogNorm(vmin=1))
+    mappable = ax.pcolormesh(d, T, hist, norm=LogNorm(vmin=1))
     fig.colorbar(mappable, label="Number of particles", pad=0)
 
     fig.tight_layout()
 
-    fig.savefig("{output_path}/density_temperature.png")
+    fig.savefig(f"{output_path}/density_temperature.png")
 
     return
 
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     snapshot_name = sys.argv[3]
     output_path = sys.argv[4]
 
-    snasphot_filename = f"{run_directory}/{snapshot_name}"
+    snapshot_filename = f"{run_directory}/{snapshot_name}"
 
     make_single_image(
         snapshot_filename,
