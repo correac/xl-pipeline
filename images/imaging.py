@@ -146,7 +146,7 @@ def project(
             boxsize=data.metadata.boxsize,
             kernel_gamma=kernel_gamma,
             neighbours=57,
-            speedup_fac=1,
+            speedup_fac=2,
             dimension=3,
         )
 
@@ -418,6 +418,8 @@ if __name__ == "__main__":
     import os
     import sys
 
+    recalculate_stellar_smoothing_lengths = True
+
     image_styles = [
         ImageAttributes(
             output_filename="dens.png",
@@ -545,6 +547,16 @@ if __name__ == "__main__":
             stellar_mass=stellar_mass,
             radius_name="$R_{200, \\rm{crit}}$",
         )
+
+        if recalculate_stellar_smoothing_lengths:
+            data.stars.smoothing_lengths = generate_smoothing_lengths(
+                coordinates=data.stars.coordinates,
+                boxsize=data.metadata.boxsize,
+                kernel_gamma=kernel_gamma,
+                neighbours=57,
+                speedup_fac=1,
+                dimension=3,
+            )
 
         for image_style in image_styles:
             image_style.output_path = output_path
