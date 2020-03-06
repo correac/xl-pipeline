@@ -528,9 +528,9 @@ if __name__ == "__main__":
             particles, snapshot_path, generate_extra_mask=False
         )
 
-        x = particles.x / data.metadata.a
-        y = particles.y / data.metadata.a
-        z = particles.z / data.metadata.a
+        x = particles.x_mbp / data.metadata.a
+        y = particles.y_mbp / data.metadata.a
+        z = particles.z_mbp / data.metadata.a
         r = particles.r_200crit / data.metadata.a
 
         halo_center = unyt_array([x, y, z])
