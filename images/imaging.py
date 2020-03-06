@@ -1,5 +1,17 @@
 """
 Contains objects and functions to help with projected rendering.
+
+This should be used instead of `detail_image`, which is preserved
+for backwards compatibility.
+
+When ran in basic script mode this produces many face/edge on images
+of various projected quantities.
+
+To create an image, you need to create an instance of
+`ImageAttributes`, describing how you want the image to be plotted,
+and `GalaxyAttributes`, which describes this specfic galaxy (e.g.
+its center, radius). This is then passed to `render_galaxy_image`,
+which produces the output images.
 """
 
 import attr
@@ -48,25 +60,34 @@ class ImageAttributes(object):
     """
 
     output_filename = attr.ib()
+    output_path: str = attr.ib(".")
 
     particle_type: str = attr.ib(default="gas")
     visualise: str = attr.ib(default="projected_density")
+    # Face on, default, or edge on
+    projection: str = attr.ib(default="default")
+
+    # Decorations. Scalebar really just labels the radius of radius.
     decorate_scalebar: bool = attr.ib(default=True)
     decorate_position: bool = attr.ib(default=True)
     decorate_radius: bool = attr.ib(default=True)
     decorate_masses: bool = attr.ib(default=True)
     decorate_image_type: bool = attr.ib(default=True)
-    projection: str = attr.ib(default="default")
+
     resolution: int = attr.ib(default=1024)
+
     cmap: str = attr.ib(default="viridis")
     norm: object = attr.ib(default=LogNorm)
     vmin: Optional[unyt_quantity] = attr.ib(default=None)
     vmax: Optional[unyt_quantity] = attr.ib(default=None)
-    number_of_radii: float = attr.ib(default=1.5)
-    text_color: str = attr.ib(default="white")
+    # Manual filling of image below this value, to avoid white
     fill_below: Optional[unyt_quantity] = attr.ib(default=None)
-    scalebar_size: unyt_quantity = attr.ib(default=unyt_quantity(100, units="kpc"))
+
+    text_color: str = attr.ib(default="white")
     plot_background_color: str = attr.ib("black")
+
+    # How far out do you want to plot in terms of GalaxyAttributes.radius?
+    number_of_radii: float = attr.ib(default=1.5)
 
 
 @attr.s
@@ -83,6 +104,7 @@ class GalaxyAttributes(object):
     unique_id: int = attr.ib()
     halo_mass: unyt_quantity = attr.ib(default=None)
     stellar_mass: unyt_quantity = attr.ib(default=None)
+    radius_name: str = attr.ib("$R_{200, \\rm{crit}$")
 
 
 def get_rotation(
@@ -280,7 +302,7 @@ def decorate_axes(
         ax.text(
             x,
             y,
-            r"$R_{200, \rm{crit}}$",
+            galaxy_attributes.radius_name,
             ha="center",
             va="bottom",
             color=image_attributes.text_color,
@@ -367,6 +389,11 @@ def decorate_axes(
 def render_galaxy_image(
     data, image_attributes: ImageAttributes, galaxy_attributes: GalaxyAttributes
 ):
+    """
+    Main function - takes a swiftsimio data, and plot attributes, and
+    produces an output image.
+    """
+
     image = project(data, image_attributes, galaxy_attributes)
 
     fill_image(image, image_attributes)
@@ -375,7 +402,9 @@ def render_galaxy_image(
 
     decorate_axes(ax, image_attributes, galaxy_attributes)
 
-    fig.savefig(f"{galaxy_attributes.unique_id}_{image_attributes.output_filename}")
+    fig.savefig(
+        f"{image_attributes.output_path}/{galaxy_attributes.unique_id}_{image_attributes.output_filename}"
+    )
 
     plt.close(fig)
 
@@ -386,7 +415,7 @@ if __name__ == "__main__":
     from velociraptor.swift.swift import to_swiftsimio_dataset
     from velociraptor.particles import load_groups
     from velociraptor import load
-    import numpy as np
+    import os
     import sys
 
     image_styles = [
@@ -400,6 +429,11 @@ if __name__ == "__main__":
             fill_below=unyt_quantity(1000, units="Solar_Mass / (kpc * kpc)"),
         ),
         ImageAttributes(
+            output_filename="dens_edgeon.png",
+            projection="edgeon",
+            fill_below=unyt_quantity(1000, units="Solar_Mass / (kpc * kpc)"),
+        ),
+        ImageAttributes(
             output_filename="temp_faceon.png",
             visualise="temperatures",
             projection="faceon",
@@ -407,6 +441,22 @@ if __name__ == "__main__":
             cmap="twilight",
             vmin=unyt_quantity(1e3, units="K"),
             vmax=unyt_quantity(1e7, units="K"),
+        ),
+        ImageAttributes(
+            output_filename="temp_edgeon.png",
+            visualise="temperatures",
+            projection="edgeon",
+            fill_below=unyt_quantity(1e4, units="K"),
+            cmap="twilight",
+            vmin=unyt_quantity(1e3, units="K"),
+            vmax=unyt_quantity(1e7, units="K"),
+        ),
+        ImageAttributes(
+            output_filename="dm_faceon.png",
+            particle_type="dark_matter",
+            projection="faceon",
+            fill_below=unyt_quantity(0.1, units="Solar_Mass / (pc * pc)"),
+            cmap="plasma",
         ),
         ImageAttributes(
             output_filename="star_faceon.png",
@@ -429,18 +479,16 @@ if __name__ == "__main__":
             text_color="black",
             cmap="magma",
         ),
-        ImageAttributes(
-            output_filename="dens_edgeon.png",
-            projection="edgeon",
-            fill_below=unyt_quantity(1000, units="Solar_Mass / (kpc * kpc)"),
-        ),
     ]
 
     snapshot_path = sys.argv[1]
     velociraptor_base_name = sys.argv[2]
     output_path = sys.argv[3]
 
-    halo_ids = range(25, 30)
+    halo_ids = range(0, 100)
+
+    if not os.path.exists(output_path):
+        os.mkdir(output_path)
 
     velociraptor_properties = velociraptor_base_name
     velociraptor_groups = velociraptor_base_name.replace("properties", "catalog_groups")
@@ -495,8 +543,9 @@ if __name__ == "__main__":
             unique_id=halo_id,
             halo_mass=halo_mass,
             stellar_mass=stellar_mass,
+            radius_name="$R_{200, \\rm{crit}}$",
         )
 
         for image_style in image_styles:
+            image_style.output_path = output_path
             render_galaxy_image(data, image_style, galaxy_attributes)
-
