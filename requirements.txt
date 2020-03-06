@@ -6,3 +6,4 @@ pyyaml
 cmocean
 scipy
 numba
+cachetools

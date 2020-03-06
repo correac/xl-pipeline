@@ -27,7 +27,7 @@ image_run () {
   output_path=$plot_directory/$run_name
   snapshot_path=$run_directory/$snapshot_name
 
-  python3 images/detail_image.py $snapshot_path $catalogue_path $output_path
+  python3 images/imaging.py $snapshot_path $catalogue_path $output_path
   python3 images/halo_images.py $snapshot_path $catalogue_path $output_path
 }
 
