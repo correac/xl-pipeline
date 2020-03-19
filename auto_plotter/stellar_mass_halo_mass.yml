@@ -23,6 +23,9 @@ stellar_mass_halo_mass_100:
       units: Solar_Mass
   metadata:
     title: Stellar Mass-Halo Mass relation (100 kpc aperture)
+  observational_data:
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Behroozi2013.hdf5
 
 stellar_mass_halo_mass_30:
   type: "2dhistogram"
@@ -49,3 +52,6 @@ stellar_mass_halo_mass_30:
       units: Solar_Mass
   metadata:
     title: Stellar Mass-Halo Mass relation (30 kpc aperture)
+  observational_data:
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Behroozi2013.hdf5
