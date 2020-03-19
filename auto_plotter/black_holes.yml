@@ -62,15 +62,15 @@ stellar_veldisp_black_hole_mass_10:
   type: "scatter"
   legend_loc: "upper left"
   x:
-    quantity: "apertures.veldisp_star_10_kpc"
-    units: km/s
-    start: 1e3
-    end: 1e0
-  y:
     quantity: "masses.m_bh"
     units: Solar_Mass
     start: 1e6
     end: 1e11
+  y:
+    quantity: "apertures.veldisp_star_10_kpc"
+    units: km/s
+    start: 1e3
+    end: 1e0
   median:
     plot: true
     log: true
@@ -89,15 +89,15 @@ stellar_veldisp_black_hole_mass_30:
   type: "scatter"
   legend_loc: "upper left"
   x:
-    quantity: "apertures.veldisp_star_30_kpc"
-    units: km/s
-    start: 1e3
-    end: 1e0
-  y:
     quantity: "masses.m_bh"
     units: Solar_Mass
     start: 1e6
     end: 1e11
+  y:
+    quantity: "apertures.veldisp_star_30_kpc"
+    units: km/s
+    start: 1e3
+    end: 1e0
   median:
     plot: true
     log: true
