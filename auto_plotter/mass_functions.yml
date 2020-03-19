@@ -1,0 +1,37 @@
+stellar_mass_function_30:
+  type: "massfunction"
+  number_of_bins: 25
+  x:
+    quantity: "apertures.mass_star_30_kpc"
+    units: Solar_Mass
+    start: 1e7
+    end: 1e12
+  y:
+    units: 1/Mpc**3
+    start: 1e-6
+    end: 0.316 # (1e-0.5)
+  metadata:
+    title: Stellar Mass Function (30 kpc aperture)
+  observational_data:
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassFunction/LiWhite2009.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassFunction/DSouza2015.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassFunction/Wright2017.hdf5
+
+stellar_mass_function_100:
+  type: "massfunction"
+  number_of_bins: 25
+  x:
+    quantity: "apertures.mass_star_100_kpc"
+    units: Solar_Mass
+    start: 1e7
+    end: 1e12
+  y:
+    units: 1/Mpc**3
+    start: 1e-6
+    end: 0.316 # (1e-0.5)
+  metadata:
+    title: Stellar Mass Function (100 kpc aperture)
+  observational_data:
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassFunction/LiWhite2009.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassFunction/DSouza2015.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassFunction/Wright2017.hdf5
