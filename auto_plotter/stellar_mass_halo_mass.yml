@@ -1,4 +1,4 @@
-stellar_mass_halo_mass_100:
+stellar_mass_halo_mass_all_100:
   type: "2dhistogram"
   legend_loc: "lower right"
   x:
@@ -27,7 +27,38 @@ stellar_mass_halo_mass_100:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Behroozi2013.hdf5
 
-stellar_mass_halo_mass_30:
+stellar_mass_halo_mass_centrals_100:
+  type: "2dhistogram"
+  select_structure_type: 10
+  legend_loc: "lower right"
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  y:
+    quantity: "apertures.mass_star_100_kpc"
+    units: Solar_Mass
+    start: 1e6
+    end: 1e12
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e9
+      units: Solar_Mass
+    end:
+      value: 1e14
+      units: Solar_Mass
+  metadata:
+    title: Stellar Mass-Halo Mass relation (100 kpc aperture, centrals only)
+  observational_data:
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Behroozi2013.hdf5
+
+
+stellar_mass_halo_mass_all_30:
   type: "2dhistogram"
   legend_loc: "lower right"
   x:
@@ -52,6 +83,36 @@ stellar_mass_halo_mass_30:
       units: Solar_Mass
   metadata:
     title: Stellar Mass-Halo Mass relation (30 kpc aperture)
+  observational_data:
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Behroozi2013.hdf5
+
+stellar_mass_halo_mass_all_30:
+  type: "2dhistogram"
+  legend_loc: "lower right"
+  select_substructure_type: 10
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  y:
+    quantity: "apertures.mass_star_30_kpc"
+    units: Solar_Mass
+    start: 1e6
+    end: 1e12
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e9
+      units: Solar_Mass
+    end:
+      value: 1e14
+      units: Solar_Mass
+  metadata:
+    title: Stellar Mass-Halo Mass relation (30 kpc aperture, centrals only)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Behroozi2013.hdf5
