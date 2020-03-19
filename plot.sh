@@ -46,6 +46,12 @@ plot_run () {
     $run_directory \
     $snapshot_name \
     $output_path
+
+  python3 plotting/density_temperature_metals.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
 }
 
 # Creates a summary plot based on the above created figures, and converts
