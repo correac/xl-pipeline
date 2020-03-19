@@ -56,3 +56,57 @@ stellar_mass_black_hole_mass_100:
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/McConnell2013_Data.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/McConnell2013_Fit.hdf5
+
+
+stellar_veldisp_black_hole_mass_10:
+  type: "scatter"
+  legend_loc: "upper left"
+  x:
+    quantity: "apertures.veldisp_star_10_kpc"
+    units: km/s
+    start: 1e3
+    end: 1e0
+  y:
+    quantity: "masses.m_bh"
+    units: Solar_Mass
+    start: 1e6
+    end: 1e11
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e8
+      units: Solar_Mass
+    end:
+      value: 1e12
+      units: Solar_Mass
+  metadata:
+    title: Stellar Velocity Dispersion-Black Hole Mass relation (10 kpc)
+
+
+stellar_veldisp_black_hole_mass_30:
+  type: "scatter"
+  legend_loc: "upper left"
+  x:
+    quantity: "apertures.veldisp_star_30_kpc"
+    units: km/s
+    start: 1e3
+    end: 1e0
+  y:
+    quantity: "masses.m_bh"
+    units: Solar_Mass
+    start: 1e6
+    end: 1e11
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e8
+      units: Solar_Mass
+    end:
+      value: 1e12
+      units: Solar_Mass
+  metadata:
+    title: Stellar Velocity Dispersion-Black Hole Mass relation (30 kpc)
