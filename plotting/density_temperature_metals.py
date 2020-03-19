@@ -8,13 +8,14 @@ import numpy as np
 from swiftsimio import load
 
 from unyt import mh, cm, Gyr
-from matplotlib.colors import LogNorm
+from matplotlib.colors import Normalize
 from matplotlib.animation import FuncAnimation
 
 # Constants; these could be put in the parameter file but are rarely changed.
 density_bounds = [10 ** (-9.5), 1e4]  # in nh/cm^3
 temperature_bounds = [10 ** (2), 10 ** (9.5)]  # in K
-metallicity_bounds = [1e-4, 0.5]  # In metal mass fraction
+metallicity_bounds = [-6, -1]  # In metal mass fraction
+min_metallicity = 1e-8
 bins = 256
 
 # Plotting controls
@@ -23,7 +24,7 @@ plt.style.use("mnras.mplstyle")
 
 def get_data(filename):
     """
-    Grabs the data (T in Kelvin and density in mh / cm^3, and metallicity).
+    Grabs the data (T in Kelvin and density in mh / cm^3, and log10 metallicity).
     """
 
     data = load(filename)
@@ -34,8 +35,9 @@ def get_data(filename):
     number_density = (data.gas.densities * (density_factor / mh)).to(cm ** -3)
     temperature = (data.gas.temperatures * temperature_factor).to("K")
     metallicity = data.gas.metal_mass_fractions
+    metallicity[metallicity < min_metallicity] = min_metallicity
 
-    return number_density.value, temperature.value, metallicity.value
+    return number_density.value, temperature.value, np.log10(metallicity.value)
 
 
 def make_hist(filename, density_bounds, temperature_bounds, bins):
@@ -62,9 +64,11 @@ def make_hist(filename, density_bounds, temperature_bounds, bins):
     H_norm, _, _ = np.histogram2d(dens, temps, bins=[density_bins, temperature_bins])
 
     # Avoid div/0
-    H_norm[H_norm == 0.0] = 1.0
+    mask = H_norm == 0.0
+    H[mask] = -25
+    H_norm[mask] = 1.0
 
-    return (H / H_norm).T, density_edges, temperature_edges
+    return np.ma.array((H / H_norm).T, mask=mask.T), density_edges, temperature_edges
 
 
 def setup_axes():
@@ -92,9 +96,9 @@ def make_single_image(
     hist, d, T = make_hist(filename, density_bounds, temperature_bounds, bins)
 
     mappable = ax.pcolormesh(
-        d, T, hist, norm=LogNorm(vmin=metallicity_bounds[0], vmax=metallicity_bounds[1])
+        d, T, hist, norm=Normalize(vmin=metallicity_bounds[0], vmax=metallicity_bounds[1])
     )
-    fig.colorbar(mappable, label="Mean Metallicity", pad=0)
+    fig.colorbar(mappable, label="Mean (Logarithmic) Metallicity $\log_{10} Z$ (min. $Z=10^{-8}$)", pad=0)
 
     fig.tight_layout()
 

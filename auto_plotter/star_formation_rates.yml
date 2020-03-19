@@ -136,7 +136,7 @@ stellar_mass_passive_fraction_30:
   mean:
     plot: true
     log: true
-    show_scatter: false
+    scatter: "none"
     number_of_bins: 25
     start:
       value: 1e6
@@ -168,7 +168,7 @@ stellar_mass_passive_fraction_100:
   mean:
     plot: true
     log: true
-    show_scatter: false
+    scatter: "none"
     number_of_bins: 25
     start:
       value: 1e6
