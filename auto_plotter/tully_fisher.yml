@@ -9,7 +9,7 @@ tully_fisher_100:
     end: 1e12
   y:
     quantity: "velocities.vmax"
-    units: "dimensionless"
+    units: km/s
     log: false
     start: 20
     end: 700
@@ -40,7 +40,7 @@ tully_fisher_30:
     end: 1e12
   y:
     quantity: "velocities.vmax"
-    units: "dimensionless"
+    units: km/s
     log: false
     start: 20
     end: 700
