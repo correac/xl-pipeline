@@ -4,7 +4,6 @@ Makes a rho-T plot. Uses the swiftsimio library.
 
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.stats import binned_statistic_2d
 
 from swiftsimio import load
 
@@ -54,11 +53,18 @@ def make_hist(filename, density_bounds, temperature_bounds, bins):
         np.log10(temperature_bounds[0]), np.log10(temperature_bounds[1]), bins
     )
 
-    H, density_edges, temperature_edges = binned_statistic_2d(
-        *get_data(filename), bins=[density_bins, temperature_bins], statistic="median"
+    dens, temps, metals = get_data(filename)
+
+    H, density_edges, temperature_edges = np.histogram2d(
+        dens, temps, bins=[density_bins, temperature_bins], weights=metals
     )
 
-    return H.T, density_edges, temperature_edges
+    H_norm, _, _ = np.histogram2d(dens, temps, bins=[density_bins, temperature_bins])
+
+    # Avoid div/0
+    H_norm[H_norm == 0.0] = 1.0
+
+    return (H / H_norm).T, density_edges, temperature_edges
 
 
 def setup_axes():
@@ -88,7 +94,7 @@ def make_single_image(
     mappable = ax.pcolormesh(
         d, T, hist, norm=LogNorm(vmin=metallicity_bounds[0], vmax=metallicity_bounds[1])
     )
-    fig.colorbar(mappable, label="Median Metallicity", pad=0)
+    fig.colorbar(mappable, label="Mean Metallicity", pad=0)
 
     fig.tight_layout()
 
