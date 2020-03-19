@@ -1,5 +1,6 @@
 stellar_mass_black_hole_mass_30:
   type: "scatter"
+  legend_loc: "upper left"
   x:
     quantity: "apertures.mass_star_30_kpc"
     units: Solar_Mass
@@ -28,6 +29,7 @@ stellar_mass_black_hole_mass_30:
 
 stellar_mass_black_hole_mass_100:
   type: "scatter"
+  legend_loc: "upper left"
   x:
     quantity: "apertures.mass_star_100_kpc"
     units: Solar_Mass

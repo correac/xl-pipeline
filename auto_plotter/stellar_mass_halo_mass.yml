@@ -1,5 +1,6 @@
 stellar_mass_halo_mass_100:
   type: "2dhistogram"
+  legend_loc: "lower right"
   x:
     quantity: "masses.mass_200crit"
     units: Solar_Mass
@@ -22,3 +23,29 @@ stellar_mass_halo_mass_100:
       units: Solar_Mass
   metadata:
     title: Stellar Mass-Halo Mass relation (100 kpc aperture)
+
+stellar_mass_halo_mass_30:
+  type: "2dhistogram"
+  legend_loc: "lower right"
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  y:
+    quantity: "apertures.mass_star_30_kpc"
+    units: Solar_Mass
+    start: 1e6
+    end: 1e12
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e9
+      units: Solar_Mass
+    end:
+      value: 1e14
+      units: Solar_Mass
+  metadata:
+    title: Stellar Mass-Halo Mass relation (30 kpc aperture)
