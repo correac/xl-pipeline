@@ -4,7 +4,7 @@ stellar_mass_black_hole_mass_30:
   x:
     quantity: "apertures.mass_star_30_kpc"
     units: Solar_Mass
-    start: 1e8
+    start: 1e7
     end: 1e12
   y:
     quantity: "masses.m_bh"
@@ -16,7 +16,7 @@ stellar_mass_black_hole_mass_30:
     log: true
     number_of_bins: 25
     start:
-      value: 1e8
+      value: 1e7
       units: Solar_Mass
     end:
       value: 1e12
@@ -34,7 +34,7 @@ stellar_mass_black_hole_mass_100:
   x:
     quantity: "apertures.mass_star_100_kpc"
     units: Solar_Mass
-    start: 1e8
+    start: 1e7
     end: 1e12
   y:
     quantity: "masses.m_bh"
@@ -46,7 +46,7 @@ stellar_mass_black_hole_mass_100:
     log: true
     number_of_bins: 25
     start:
-      value: 1e8
+      value: 1e7
       units: Solar_Mass
     end:
       value: 1e12
@@ -60,11 +60,11 @@ stellar_mass_black_hole_mass_100:
 
 stellar_veldisp_black_hole_mass_10:
   type: "scatter"
-  legend_loc: "upper right"
+  legend_loc: "upper left"
   x:
     quantity: "apertures.veldisp_star_10_kpc"
     units: km/s
-    start: 1e0
+    start: 50
     end: 1e3
   y:
     quantity: "masses.m_bh"
@@ -76,11 +76,11 @@ stellar_veldisp_black_hole_mass_10:
     log: true
     number_of_bins: 25
     start:
-      value: 1e8
-      units: Solar_Mass
+      value: 1e0
+      units: km/s
     end:
-      value: 1e12
-      units: Solar_Mass
+      value: 1e3
+      units: km/s
   metadata:
     title: Stellar Velocity Dispersion-Black Hole Mass relation (10 kpc)
   observational_data:
@@ -89,11 +89,11 @@ stellar_veldisp_black_hole_mass_10:
 
 stellar_veldisp_black_hole_mass_30:
   type: "scatter"
-  legend_loc: "upper right"
+  legend_loc: "upper left"
   x:
     quantity: "apertures.veldisp_star_10_kpc"
     units: km/s
-    start: 1e0
+    start: 50
     end: 1e3
   y:
     quantity: "masses.m_bh"
@@ -105,11 +105,11 @@ stellar_veldisp_black_hole_mass_30:
     log: true
     number_of_bins: 25
     start:
-      value: 1e8
-      units: Solar_Mass
+      value: 1e0
+      units: km/s
     end:
-      value: 1e12
-      units: Solar_Mass
+      value: 1e3
+      units: km/s
   metadata:
     title: Stellar Velocity Dispersion-Black Hole Mass relation (30 kpc)
   observational_data:

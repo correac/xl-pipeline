@@ -4,20 +4,19 @@ tully_fisher_100:
   x:
     quantity: "apertures.mass_star_100_kpc"
     units: solar_mass
-    start: 1e6
+    start: 1e7
     end: 1e12
   y:
     quantity: "velocities.vmax"
     units: km/s
     start: 20
     end: 700
-  mean:
+  median:
     plot: true
     log: true
-    scatter: "none"
     number_of_bins: 25
     start:
-      value: 1e6
+      value: 1e7
       units: solar_mass
     end:
       value: 1e12
@@ -33,20 +32,19 @@ tully_fisher_30:
   x:
     quantity: "apertures.mass_star_30_kpc"
     units: solar_mass
-    start: 1e6
+    start: 1e7
     end: 1e12
   y:
     quantity: "velocities.vmax"
     units: km/s
     start: 20
     end: 700
-  mean:
+  median:
     plot: true
     log: true
-    scatter: "none"
     number_of_bins: 25
     start:
-      value: 1e6
+      value: 1e7
       units: solar_mass
     end:
       value: 1e12

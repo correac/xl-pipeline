@@ -4,7 +4,7 @@ stellar_mass_galaxy_size_100:
   x:
     quantity: "apertures.mass_star_100_kpc"
     units: Solar_Mass
-    start: 1e6
+    start: 1e7
     end: 1e12
   y:
     quantity: "apertures.rhalfmass_star_100_kpc"
@@ -16,7 +16,7 @@ stellar_mass_galaxy_size_100:
     log: true
     number_of_bins: 25
     start:
-      value: 1e8
+      value: 1e7
       units: Solar_Mass
     end:
       value: 1e12
@@ -33,7 +33,7 @@ stellar_mass_galaxy_size_30:
   x:
     quantity: "apertures.mass_star_30_kpc"
     units: Solar_Mass
-    start: 1e6
+    start: 1e7
     end: 1e12
   y:
     quantity: "apertures.rhalfmass_star_30_kpc"
@@ -45,7 +45,7 @@ stellar_mass_galaxy_size_30:
     log: true
     number_of_bins: 25
     start:
-      value: 1e8
+      value: 1e7
       units: Solar_Mass
     end:
       value: 1e12
@@ -62,7 +62,7 @@ stellar_mass_projected_galaxy_size_100:
   x:
     quantity: "apertures.mass_star_100_kpc"
     units: Solar_Mass
-    start: 1e6
+    start: 1e7
     end: 1e12
   y:
     quantity: "projected_apertures.projected_1_rhalfmass_star_100_kpc"
@@ -74,7 +74,7 @@ stellar_mass_projected_galaxy_size_100:
     log: true
     number_of_bins: 25
     start:
-      value: 1e8
+      value: 1e7
       units: Solar_Mass
     end:
       value: 1e12
@@ -92,7 +92,7 @@ stellar_mass_projected_galaxy_size_30:
   x:
     quantity: "apertures.mass_star_30_kpc"
     units: Solar_Mass
-    start: 1e6
+    start: 1e7
     end: 1e12
   y:
     quantity: "projected_apertures.projected_1_rhalfmass_star_30_kpc"
@@ -104,7 +104,7 @@ stellar_mass_projected_galaxy_size_30:
     log: true
     number_of_bins: 25
     start:
-      value: 1e8
+      value: 1e7
       units: Solar_Mass
     end:
       value: 1e12
@@ -122,7 +122,7 @@ stellar_mass_galaxy_size:
   x:
     quantity: "apertures.mass_star_100_kpc"
     units: Solar_Mass
-    start: 1e6
+    start: 1e7
     end: 1e12
   y:
     quantity: "apertures.rhalfmass_star_100_kpc"
@@ -134,7 +134,7 @@ stellar_mass_galaxy_size:
     log: true
     number_of_bins: 25
     start:
-      value: 1e6
+      value: 1e7
       units: Solar_Mass
     end:
       value: 1e12
