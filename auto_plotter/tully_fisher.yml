@@ -1,7 +1,6 @@
 tully_fisher_100:
   type: "scatter"
   legend_loc: "upper left"
-  redshift_loc: "upper center"
   x:
     quantity: "apertures.mass_star_100_kpc"
     units: solar_mass
@@ -10,7 +9,6 @@ tully_fisher_100:
   y:
     quantity: "velocities.vmax"
     units: km/s
-    log: false
     start: 20
     end: 700
   mean:
@@ -32,7 +30,6 @@ tully_fisher_100:
 tully_fisher_30:
   type: "scatter"
   legend_loc: "upper left"
-  redshift_loc: "upper center"
   x:
     quantity: "apertures.mass_star_30_kpc"
     units: solar_mass
@@ -41,7 +38,6 @@ tully_fisher_30:
   y:
     quantity: "velocities.vmax"
     units: km/s
-    log: false
     start: 20
     end: 700
   mean:
