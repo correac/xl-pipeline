@@ -60,7 +60,7 @@ stellar_mass_black_hole_mass_100:
 
 stellar_veldisp_black_hole_mass_10:
   type: "scatter"
-  legend_loc: "upper left"
+  legend_loc: "upper right"
   x:
     quantity: "masses.m_bh"
     units: Solar_Mass
@@ -87,7 +87,7 @@ stellar_veldisp_black_hole_mass_10:
 
 stellar_veldisp_black_hole_mass_30:
   type: "scatter"
-  legend_loc: "upper left"
+  legend_loc: "upper right"
   x:
     quantity: "masses.m_bh"
     units: Solar_Mass
