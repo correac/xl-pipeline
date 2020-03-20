@@ -35,5 +35,8 @@ for aperture_size in aperture_sizes:
     )
     is_passive.name = "Passive Fraction"
 
+    is_active = 1.0 - is_passive
+    is_active.name = "Active Fraction"
+
     setattr(self, f"specific_sfr_gas_{aperture_size}_kpc", ssfr)
     setattr(self, f"is_passive_{aperture_size}_kpc", is_passive)
