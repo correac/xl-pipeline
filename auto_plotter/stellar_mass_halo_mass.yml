@@ -30,6 +30,7 @@ stellar_mass_halo_mass_all_100:
 stellar_mass_halo_mass_centrals_100:
   type: "2dhistogram"
   select_structure_type: 10
+  comment: "Centrals only"
   legend_loc: "lower right"
   x:
     quantity: "masses.mass_200crit"
@@ -89,6 +90,7 @@ stellar_mass_halo_mass_all_30:
 
 stellar_mass_halo_mass_all_30:
   type: "2dhistogram"
+  comment: "Centrals only"
   legend_loc: "lower right"
   select_substructure_type: 10
   x:
