@@ -88,7 +88,7 @@ stellar_mass_halo_mass_all_30:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Behroozi2013.hdf5
 
-stellar_mass_halo_mass_all_30:
+stellar_mass_halo_mass_centrals_30:
   type: "2dhistogram"
   comment: "Centrals only"
   legend_loc: "lower right"

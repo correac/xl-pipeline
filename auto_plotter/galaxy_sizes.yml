@@ -119,6 +119,7 @@ stellar_mass_projected_galaxy_size_30:
 stellar_mass_projected_galaxy_size_active_only_100:
   type: "scatter"
   comment: "Active only"
+  comment_loc: "upper right"
   legend_loc: "upper left"
   selection_mask: "derived_quantities.is_active_100_kpc"
   x:
@@ -151,6 +152,7 @@ stellar_mass_projected_galaxy_size_active_only_100:
 stellar_mass_projected_galaxy_size_active_only_30:
   type: "scatter"
   comment: "Active only"
+  comment_loc: "upper right"
   legend_loc: "upper left"
   selection_mask: "derived_quantities.is_active_30_kpc"
   x:
@@ -183,6 +185,7 @@ stellar_mass_projected_galaxy_size_active_only_30:
 stellar_mass_projected_galaxy_size_passive_only_100:
   type: "scatter"
   comment: "Passive only"
+  comment_loc: "upper right"
   legend_loc: "upper left"
   selection_mask: "derived_quantities.is_passive_100_kpc"
   x:
@@ -215,6 +218,7 @@ stellar_mass_projected_galaxy_size_passive_only_100:
 stellar_mass_projected_galaxy_size_passive_only_30:
   type: "scatter"
   comment: "Passive only"
+  comment_loc: "upper right"
   legend_loc: "upper left"
   selection_mask: "derived_quantities.is_passive_30_kpc"
   x:
