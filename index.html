@@ -125,9 +125,24 @@
         </p>
     </div>
 
-    <!-- <div class="plotrow" id="perf">
-        <h1>Performance</h1>
-    </div> -->
+    <div class="plotrow" id="perf">
+        <h1>Code Performance</h1>
+        <div class="plots">
+            <img class="plot" src="wallclock_number_of_steps.png" />
+            <img class="plot" src="wallclock_simulation_time.png" />
+            <img class="plot" src="number_of_steps_simulation_time.png" />
+            <img class="plot" src="particle_updates_step_cost.png" />
+        </div>
+        <p>
+            Several performance metric plots. Note that finding out more detailed information
+            for performance tracking is more difficult in SWIFT and requires running simulations
+            with at least -v 1, but ideally with full task tracking enabled.
+
+            The first three plots show the evolution of the cost of the simulation as a function
+            of time, with the last one showing how the cost per step depends on the number of updates
+            required in that step.
+        </p>
+    </div>
 
 
     <!-- Data download -->

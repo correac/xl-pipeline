@@ -52,6 +52,30 @@ plot_run () {
     $run_directory \
     $snapshot_name \
     $output_path
+
+  python3 performance/number_of_steps_simulation_time.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
+
+  python3 performance/particle_updates_step_cost.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
+
+  python3 performance/wallclock_number_of_steps.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
+
+  python3 performance/wallclock_simulation_time.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
 }
 
 # Creates a summary plot based on the above created figures, and converts
