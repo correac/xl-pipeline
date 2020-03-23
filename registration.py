@@ -40,3 +40,4 @@ for aperture_size in aperture_sizes:
 
     setattr(self, f"specific_sfr_gas_{aperture_size}_kpc", ssfr)
     setattr(self, f"is_passive_{aperture_size}_kpc", is_passive)
+    setattr(self, f"is_active_{aperture_size}_kpc", is_active)
