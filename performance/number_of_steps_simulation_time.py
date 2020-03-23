@@ -33,7 +33,7 @@ data = np.genfromtxt(
 ).T
 
 sim_time = unyt.unyt_array(data[1], units=snapshot.units.time).to("Gyr")
-number_of_steps = np.arange(sim_time.size)
+number_of_steps = np.arange(sim_time.size) / 1e6
 
 fig, ax = plt.subplots()
 
@@ -43,7 +43,7 @@ ax.plot(number_of_steps, sim_time, color="C0")
 ax.scatter(number_of_steps[-1], sim_time[-1], color="C0", marker=".", zorder=10)
 
 ax.set_ylabel("Simulation time [Gyr]")
-ax.set_xlabel("Number of steps")
+ax.set_xlabel("Number of steps [millions]")
 
 ax.set_xlim(0, None)
 ax.set_ylim(0, None)

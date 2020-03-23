@@ -33,7 +33,7 @@ data = np.genfromtxt(
 ).T
 
 wallclock_time = unyt.unyt_array(np.cumsum(data[-2]), units="ms").to("Hour")
-number_of_steps = np.arange(wallclock_time.size)
+number_of_steps = np.arange(wallclock_time.size) / 1e6
 
 fig, ax = plt.subplots()
 
@@ -42,7 +42,7 @@ ax.plot(wallclock_time, number_of_steps, color="C0")
 
 ax.scatter(wallclock_time[-1], number_of_steps[-1], color="C0", marker=".", zorder=10)
 
-ax.set_ylabel("Number of steps")
+ax.set_ylabel("Number of steps [millions]")
 ax.set_xlabel("Wallclock time [Hours]")
 
 ax.set_xlim(0, None)
