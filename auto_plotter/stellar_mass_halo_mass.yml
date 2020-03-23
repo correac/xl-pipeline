@@ -92,7 +92,7 @@ stellar_mass_halo_mass_centrals_30:
   type: "2dhistogram"
   comment: "Centrals only"
   legend_loc: "lower right"
-  select_substructure_type: 10
+  select_structure_type: 10
   x:
     quantity: "masses.mass_200crit"
     units: Solar_Mass
