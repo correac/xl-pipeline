@@ -43,7 +43,7 @@ fig, ax = plt.subplots()
 # Simulation data plotting
 H, updates_edges, wallclock_edges = np.histogram2d(
     number_of_updates.value,
-    wallclock_time.values,
+    wallclock_time.value,
     bins=[number_of_updates_bins.value, wallclock_time_bins.value],
 )
 
