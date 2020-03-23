@@ -70,31 +70,34 @@ create_summary_plot () {
   old_directory=$(pwd)
   cd $output_path
 
-  python3 ../../data_conversion/parameters.py "${run_directory}/eagle_25.yml"
-  python3 ../../data_conversion/catalogue.py
+  python3 $old_directory/data_conversion/parameters.py "${run_directory}/eagle_25.yml"
+  python3 $old_directory/data_conversion/catalogue.py
+  
+  # Copy in the index.html file for summary web viewing
+  cp $old_directory/index.html .
 
   magick montage -geometry +4+4 \
     stellar_mass_function_100.png \
     stellar_mass_halo_mass_centrals_100.png \
+    stellar_mass_galaxy_size_100.png \
     stellar_mass_projected_galaxy_size_100.png \
     stellar_mass_black_hole_mass_100.png \
     stellar_mass_specific_sfr_100.png \
     stellar_mass_passive_fraction_100.png \
+    tully_fisher_100.png \
+    stellar_veldisp_black_hole_mass_10.png \
+    density_temperature.png \
     density_temperature_metals.png \
     star_formation_history.png \
     montage.png
 
   convert montage.png \
-    -font Times-Roman \
-    -pointsize 32 \
-    -background White label:"$(cat parameters.txt)" +swap \
+    -pointsize 32 -background White label:"$(cat parameters.txt)" +swap \
     -gravity Center \
     -append temp.png
 
   convert temp.png \
-    -font Times-Roman \
-    -pointsize 64 \
-    -background White label:"${run_name}" +swap \
+    -pointsize 64 -background White label:"${run_name}" +swap \
     -gravity Center \
     -bordercolor White \
     -border 0x25 \
