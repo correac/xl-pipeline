@@ -28,7 +28,7 @@ timesteps_filename = timesteps_glob[0]
 snapshot_filename = f"{run_directory}/{snapshot_name}"
 
 number_of_updates_bins = unyt.unyt_array(np.logspace(0, 10, 512), units="dimensionless")
-wallclock_time_bins = unyt.unyt_array(np.logspace(0, 6), units="ms")
+wallclock_time_bins = unyt.unyt_array(np.logspace(0, 6, 512), units="ms")
 
 
 data = np.genfromtxt(
