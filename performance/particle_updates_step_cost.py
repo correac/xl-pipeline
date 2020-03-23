@@ -56,7 +56,7 @@ fig.colorbar(mappable, label="Number of steps", pad=0)
 x_values = np.logspace(5, 9, 512)
 y_values = np.logspace(1, 5, 512)
 ax.plot(x_values, y_values, color="grey", linestyle="dashed")
-ax.text(2e7, 0.5e3, "$\\propto n", color="grey", ha="left", va="top")
+ax.text(2e7, 0.5e3, "$\\propto n$", color="grey", ha="left", va="top")
 
 ax.set_ylabel("Wallclock time for step [ms]")
 ax.set_xlabel("Number of particle updates in step")
