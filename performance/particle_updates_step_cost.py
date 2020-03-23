@@ -40,6 +40,8 @@ wallclock_time = unyt.unyt_array(data[-2], units="ms")
 
 fig, ax = plt.subplots()
 
+ax.loglog()
+
 # Simulation data plotting
 H, updates_edges, wallclock_edges = np.histogram2d(
     number_of_updates.value,
