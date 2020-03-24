@@ -53,6 +53,12 @@ plot_run () {
     $snapshot_name \
     $output_path
 
+  python3 plotting/birth_density_metallicity.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
+
   python3 performance/number_of_steps_simulation_time.py \
     $run_name \
     $run_directory \
