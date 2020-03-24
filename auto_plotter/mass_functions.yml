@@ -110,7 +110,7 @@ stellar_mass_function_passive_only_100:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassFunction/DSouza2015.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassFunction/Wright2017.hdf5
 
-  stellar_mass_function_active_only_100:
+stellar_mass_function_active_only_100:
   type: "massfunction"
   number_of_bins: 25
   legend_loc: "lower left"
