@@ -41,6 +41,12 @@ plot_run () {
     $snapshot_name \
     $output_path
 
+  python3 plotting/sn1a_rate.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
+
   python3 plotting/density_temperature.py \
     $run_name \
     $run_directory \
