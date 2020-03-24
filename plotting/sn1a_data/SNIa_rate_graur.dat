@@ -1,0 +1,10 @@
+# cosmic supernovae type Ia rate density from Graur et al. 2011
+#   SDF
+#   cosmology is H0=70, OmegaM=0.3 OmegaL=0.7
+#   Uses a Salpeter IMF  
+#   all values are without factor 1e-5
+# cancell h^3 in r_\nu!
+#   z   r_\nu   err_up  err_down    
+0.74    7.9     3.3     -4.1
+1.23    8.4     2.5     -2.8
+1.69    10.2    5.4     -3.7

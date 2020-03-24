@@ -1,0 +1,13 @@
+# cosmic supernovae type Ia rate density from Frohmaier et al. 2019 
+#   Palomar transient factory data
+#   cosmology is H0=70, OmegaM=0.3 OmegaL=0.7
+#   Uses a Salpeter IMF  
+#   all values are without factor 1e-5
+# cancell h^3 in r_\nu!
+#   z   r_\nu   err_up  err_down    stat_up stat_down
+0.0375  2.78    0.15    -0.0        1.12    -0.83
+0.1000  2.59    0.18    -0.01       0.52    -0.44
+0.1500  3.07    0.35    -0.05       0.38    -0.34
+0.2000  3.48    0.82    -0.07       0.32    -0.30
+0.2500  3.65    1.82    -0.12       0.31    -0.28
+0.3000  4.34    3.96    -0.16       0.37    -0.34
