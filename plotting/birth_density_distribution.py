@@ -58,7 +58,7 @@ for label, data in birth_densities_by_redshift.items():
     ax.plot(birth_density_centers, H / log_birth_density_bin_width, label=label)
 
 
-ax.legend()
+ax.legend(loc="lower center")
 ax.set_xlabel("Stellar Birth Density $\\rho_B$ [$n_H$ cm$^{-3}$]")
 ax.set_ylabel("Number of Stars / d$\\log\\rho_B$")
 

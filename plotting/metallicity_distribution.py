@@ -48,7 +48,7 @@ for label, data in metallicities.items():
     ax.plot(metallicity_bin_centers, H / log_metallicity_bin_width, label=label)
 
 
-ax.legend()
+ax.legend(loc="upper right")
 ax.set_xlabel("Smoothed Metal Mass Fractions $Z$ []")
 ax.set_ylabel("Number of Particles / d$\\log Z$")
 
