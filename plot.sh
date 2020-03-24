@@ -64,8 +64,8 @@ create_summary_plot () {
   old_directory=$(pwd)
   cd $output_path
 
-  python3 ../../data_conversion/parameters.py "../../${run_directory}/eagle_25.yml"
-  python3 ../../data_conversion/catalogue.py
+#  python3 ../../data_conversion/parameters.py "../../${run_directory}/eagle_25.yml"
+#  python3 ../../data_conversion/catalogue.py
 
   magick montage -geometry +4+4 \
     stellar_mass_function_30.png \
@@ -80,7 +80,7 @@ create_summary_plot () {
 
   convert montage.png \
     -pointsize 32 \
-    -background White label:"$(cat parameters.txt)" +swap \
+    -background White label:"${run_name}" +swap \
     -gravity Center \
     -append temp.png
 

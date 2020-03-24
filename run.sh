@@ -10,12 +10,15 @@ source image.sh
 # You should have a python environment with requirements.txt installed
 source env/bin/activate
 
+isnap=27
+
+isnap_formatted=$( printf '%04d' $isnap )
 # First up, an example for running the scripts on one at a time
-run_directory="Runs/Run1"
-run_name="Run1"
-plot_directory="Plots"
-snapshot_name="eagle_0036.hdf5"
-catalogue_name="stf/eagle_0036.properties.0"
+run_directory="/cosma7/data/dp004/dc-ploe1/SIMULATION_RUNS/2020_01_COLIBRE_ref/COLIBRE_L006N0188_steepEOS/"
+run_name="COLIBRE_L006N0188_steepEOS"
+plot_directory="Plots2"
+snapshot_name="data/snaps/colibre_$isnap_formatted.hdf5"
+catalogue_name="data/stf/halos_$isnap_formatted.properties.0"
 
 mkdir -p $plot_directory/$run_name
 plot_run $run_directory $run_name $plot_directory $snapshot_name $catalogue_name
@@ -28,8 +31,8 @@ plot_single_run () {
   run_name=$1
   run_directory="Runs/${run_name}"
   plot_directory="Plots"
-  snapshot_name="eagle_0036.hdf5"
-  catalogue_name="stf/eagle_0036.properties.0"
+  snapshot_name="data/snaps/colibre_$isnap_formatted.hdf5"
+  catalogue_name="data/stf/halos_$isnap_formatted.properties.0"
 
   mkdir -p $plot_directory/$run_name
 
