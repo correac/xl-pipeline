@@ -22,12 +22,13 @@ image_run () {
   plot_directory=$3
   snapshot_name=$4
   catalogue_name=$5
+  ptype=$6
 
   catalogue_path=$run_directory/$catalogue_name
   output_path=$plot_directory/$run_name
   snapshot_path=$run_directory/$snapshot_name
 
-  python3 images/imaging.py $snapshot_path $catalogue_path $output_path
+  python3 images/imaging.py $snapshot_path $catalogue_path $output_path $ptype
   python3 images/halo_images.py $snapshot_path $catalogue_path $output_path
 }
 

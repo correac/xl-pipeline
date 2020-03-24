@@ -4,6 +4,7 @@ matplotlib
 astropy
 pyyaml
 cmocean
+attrs
 scipy
 numba
 cachetools

@@ -33,6 +33,7 @@ Then, to generate the comparison data;
 
 ```
 cd velociraptor-comparison-data
+git pull origin master
 bash convert.sh
 cd ..
 ```
