@@ -18,6 +18,8 @@ sfr_output_units = unyt.msun / (unyt.year * unyt.Mpc ** 3)
 
 plt.style.use("mnras.mplstyle")
 
+import sys
+
 run_name = sys.argv[1]
 run_directory = sys.argv[2]
 snapshot_name = sys.argv[3]
