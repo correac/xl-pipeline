@@ -497,13 +497,13 @@ if __name__ == "__main__":
 
     filenames = {
         "parttypes_filename": velociraptor_base_name.replace(
-            "properties", "catalog_partypes"
+            "properties", "catalog_parttypes"
         ),
         "particles_filename": velociraptor_base_name.replace(
             "properties", "catalog_particles"
         ),
         "unbound_parttypes_filename": velociraptor_base_name.replace(
-            "properties", "catalog_partypes.unbound"
+            "properties", "catalog_parttypes.unbound"
         ),
         "unbound_particles_filename": velociraptor_base_name.replace(
             "properties", "catalog_particles.unbound"
