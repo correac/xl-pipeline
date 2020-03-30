@@ -9,7 +9,7 @@ This file calculates:
     + is_passive and is_active (30, 100 kpc) (is_passive_{x}_kpc)
         Boolean that determines whether or not a galaxy is passive. Marginal
         specific star formation rate is 1e-11 year^-1.
-    + 12 + log(O/H) ({gas_twelve_plus_log_OH_{x}_kpc, 30, 100 kpc)
+    + 12 + log(O/H) ({gas_sf_twelve_plus_log_OH_{x}_kpc, 30, 100 kpc)
         12 + log(O/H) based on metallicities. These should be removed at some point
         once velociraptor has a more sensible way of dealing with metallicity
         units.
@@ -53,6 +53,7 @@ for aperture_size in aperture_sizes:
 
 solar_metal_mass_fraction = 0.0126
 twelve_plus_log_OH_solar = 8.69
+minimal_twelve_plus_log_OH = 7.5
 
 for aperture_size in aperture_sizes:
     try:
@@ -61,7 +62,7 @@ for aperture_size in aperture_sizes:
             / solar_metal_mass_fraction
         )
         metal_mass_fraction_star.name = (
-            f"Star Metallicity $Z_*$ rel. to $Z_\\odot={solar_metal_mass_fraction}$"
+            f"Star Metallicity $Z_*$ rel. to $Z_\\odot={solar_metal_mass_fraction}$ ({aperture_size} kpc)"
         )
         setattr(
             self,
@@ -73,7 +74,7 @@ for aperture_size in aperture_sizes:
 
     try:
         metal_mass_fraction_gas = (
-            getattr(catalogue.apertures, f"zmet_gas_{aperture_size}_kpc")
+            getattr(catalogue.apertures, f"zmet_gas_sf_{aperture_size}_kpc")
             / solar_metal_mass_fraction
         )
         log_metal_mass_fraction_gas = np.log10(metal_mass_fraction_gas.value)
@@ -82,9 +83,11 @@ for aperture_size in aperture_sizes:
             units="dimensionless",
         )
         twelve_plus_log_OH.name = (
-            f"$12+\\log_{{10}}$O/H from $Z$ (Solar={twelve_plus_log_OH_solar})"
+            f"Gas (SF) $12+\\log_{{10}}$O/H from $Z$ (Solar={twelve_plus_log_OH_solar}) ({aperture_size} kpc)"
         )
+        
+        twelve_plus_log_OH[twelve_plus_log_OH < minimal_twelve_plus_log_OH] = minimal_twelve_plus_log_OH
 
-        setattr(self, f"gas_twelve_plus_log_OH_{aperture_size}_kpc", twelve_plus_log_OH)
+        setattr(self, f"gas_sf_twelve_plus_log_OH_{aperture_size}_kpc", twelve_plus_log_OH)
     except AttributeError:
         pass
