@@ -11,6 +11,7 @@ from swiftsimio import load
 
 import sys
 
+
 def latex_float(f):
     float_str = "{0:.4g}".format(f)
     if "e" in float_str:
@@ -18,6 +19,7 @@ def latex_float(f):
         return r"{0} \times 10^{{{1}}}".format(base, int(exponent))
     else:
         return float_str
+
 
 data = load(sys.argv[1])
 with open(sys.argv[2], "r") as handle:
@@ -61,7 +63,7 @@ output = f"""<ul>
     <li>$n_Z = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
     <li>$n_0 = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
     <li>$n_n = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>
-    <li>AGN $\\mathrm{{d}}T = {latex_float(parameter_file['EAGLEAGN']['AGN_delta_T_K'])}$</li>
+    <li>AGN $\\mathrm{{d}}T = {latex_float(parameter_file['EAGLEAGN']['AGN_delta_T_K'])}$ ($\\log_{{10}}(\\mathrm{{d}}T / K) = {parameter_file['EAGLEAGN']['AGN_delta_T_K']:.4g}$)</li>
     <li>AGN $C_{{\\rm eff}} = {parameter_file['EAGLEAGN']['coupling_efficiency']:.4g}$</li>
     <li>AGN Visocous $\\alpha = {latex_float(parameter_file['EAGLEAGN']['viscous_alpha'])}$</li>
   </ul>
