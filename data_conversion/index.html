@@ -6,12 +6,24 @@
             max-height: 25em
         }
     </style>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+    </script>
+    <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
 
 </head>
 
 <body>
 
     <!-- Links downwards -->
+    <!-- Available parameters:
+         + BOX_SIZE: Boxsize in Mpc (50 or 25, usually)
+         + RUN_DESCRIPTION: Description of whole run.
+    -->
 
     <a href="#smf">Stellar Mass Function</a>
     <a href="#galsize">Galaxy Sizes</a>
@@ -19,13 +31,21 @@
     <a href="#bh">Black Holes</a>
     <a href="#smhmr">Stellar Mass-Halo Mass Relation</a>
     <a href="#tullyfisher">Tully-Fisher</a>
+    <a href="#metallicity">Gas and Stellar Metallicity</a>
     <a href="#rhot">Density-Temperature</a>
     <a href="#sfh">Star Formation History and SNIa Rate</a>
     <a href="#feedbackeff">Feedback Energy Fraction</a>
     <a href="#perf">Code Performance</a>
 
     <br />
-    <p>Data for the lines on the majority of attached plots: <a href="data.yml" download>Download</a>.</p>
+    <p>Data for the lines on the majority of attached plots is available <a href="data.yml" download>here</a>.</p>
+    <p>A summary plot containing many scaling relations simultaneously is available <a href="SummaryPlot.png">here</a>.</p>
+    <p>The SWIFT parameter file for this run is available <a href="eagle_BOX_SIZE.yml" download>here</a>.</p>
+
+    <h1>Run Description</h1>
+
+    RUN_DESCRIPTION
+
 
     <!-- Actual plots -->
 
@@ -40,7 +60,8 @@
             Stellar mass function binned in equal log-width bins. For a point to be
             included in the plot, it needs to contain at least three galaxies. Second and
             third figures show only active and passive galaxies, respectively, but with
-            the same data over-plotted.
+            the same data over-plotted. Galaxies are said to be passive if the have a specific
+            star formation rate of 0.01 / Gyr or lower.
         </p>
     </div>
 
@@ -107,6 +128,22 @@
         </div>
         <p>
             Tully-Fisher relation shown for all galaxies.
+        </p>
+    </div>
+
+    <div class="plotrow" id="metallicity">
+        <h1>Gas and Stellar Metallicity</h1>
+        <div class="plots">
+            <img class="plot" src="stellar_mass_gas_sf_metallicity_100.png" />
+            <img class="plot" src="stellar_mass_star_metallicity_100.png" />
+        </div>
+        <p>
+            (Star forming) gas and stellar metallicity of galaxies. All haloes are plotted
+            including subhaloes. Different units are used for each to ensure compatibility
+            with the observational data. A minimum metallicity of 12 + log O/H = 7.5
+            is imposed for the star-forming gas. Metallicity is measured in the same
+            aperture as the stellar mass. Gallazzi data is corrected from their choice
+            of solar metallicity (0.02) to ours (0.0126).
         </p>
     </div>
 
