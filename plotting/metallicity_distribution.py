@@ -18,6 +18,7 @@ run_name = sys.argv[1]
 run_directory = sys.argv[2]
 snapshot_name = sys.argv[3]
 output_path = sys.argv[4]
+ptype = sys.argv[5]
 
 snapshot_filename = f"{run_directory}/{snapshot_name}"
 
@@ -32,10 +33,16 @@ log_metallicity_bin_width = np.log10(metallicity_bins[1]) - np.log10(
     metallicity_bins[0]
 )
 
-metallicities = {
-    "Gas": data.gas.smoothed_metal_mass_fractions.value,
-    "Stars": data.stars.smoothed_metal_mass_fractions.value,
-}
+if "COLIBRE" in ptype:
+        metallicities = {
+           "Gas": data.gas.metal_mass_fractions.value,
+           "Stars": data.stars.metal_mass_fractions.value,
+        }
+else:
+        metallicities = {
+           "Gas": data.gas.smoothed_metal_mass_fractions.value,
+           "Stars": data.stars.smoothed_metal_mass_fractions.value,
+        }
 
 # Begin plotting
 
@@ -49,7 +56,10 @@ for label, data in metallicities.items():
 
 
 ax.legend(loc="upper right")
-ax.set_xlabel("Smoothed Metal Mass Fractions $Z$ []")
+if "COLIBRE" in ptype:
+        ax.set_xlabel("Metal Mass Fractions $Z$ []")
+else:
+        ax.set_xlabel("Smoothed Metal Mass Fractions $Z$ []")
 ax.set_ylabel("Number of Particles / d$\\log Z$")
 
 fig.savefig(f"{output_path}/metallicity_distribution.png")

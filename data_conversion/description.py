@@ -22,7 +22,9 @@ def latex_float(f):
 
 
 data = load(sys.argv[1])
-with open(sys.argv[2], "r") as handle:
+ymlfile = sys.argv[2]
+
+with open(ymlfile, "r") as handle:
     parameter_file = yaml.load(handle, Loader=yaml.Loader)
 
 with open("boxsize_integer.txt", "w") as handle:
@@ -58,17 +60,36 @@ output = f"""<ul>
 <li><b>Hydrodynamics</b>: {data.metadata.hydro_info}</li>
 <li><b>Key parameters</b>:
   <ul>
-    <li>$f_{{\\rm E, min}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_min']:.4g}$</li>
-    <li>$f_{{\\rm E, max}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_max']:.4g}$</li>
-    <li>$n_Z = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
-    <li>$n_0 = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
-    <li>$n_n = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>
-    <li>AGN $\\mathrm{{d}}T = {latex_float(parameter_file['EAGLEAGN']['AGN_delta_T_K'])}$ ($\\log_{{10}}(\\mathrm{{d}}T / K) = {parameter_file['EAGLEAGN']['AGN_delta_T_K']:.4g}$)</li>
-    <li>AGN $C_{{\\rm eff}} = {parameter_file['EAGLEAGN']['coupling_efficiency']:.4g}$</li>
-    <li>AGN Visocous $\\alpha = {latex_float(parameter_file['EAGLEAGN']['viscous_alpha'])}$</li>
-  </ul>
-</ul>
 """
 
+        
+if 'colibre' in ymlfile:
+        output2 = f"""<ul>
+            <li>$E                 = {parameter_file['COLIBREFeedback']['SNII_energy_erg']}$</li>
+            <li>$f_{{\\rm E, min}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_min']:.4g}$</li>
+            <li>$f_{{\\rm E, max}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_max']:.4g}$</li>
+            <li>$n_Z = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
+            <li>$n_0 = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
+            <li>$n_n = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>
+            <li>AGN $\\mathrm{{d}}T = {parameter_file['EAGLEAGN']['AGN_delta_T_K']}$ ($\\log_{{10}}(\\mathrm{{d}}T / K) = {parameter_file['EAGLEAGN']['AGN_delta_T_K']}$)</li>
+            <li>AGN $C_{{\\rm eff}} = {parameter_file['EAGLEAGN']['coupling_efficiency']:.4g}$</li>
+            <li>AGN Visocous $\\alpha = {parameter_file['EAGLEAGN']['viscous_alpha']}$</li>
+        </ul>
+        </ul>
+       """
+else:
+       output2 = f"""<ul>
+            <li>$f_{{\\rm E, min}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_min']:.4g}$</li>
+            <li>$f_{{\\rm E, max}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_max']:.4g}$</li>
+            <li>$n_Z = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
+            <li>$n_0 = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
+            <li>$n_n = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>
+            <li>AGN $\\mathrm{{d}}T = {latex_float(parameter_file['EAGLEAGN']['AGN_delta_T_K'])}$ ($\\log_{{10}}(\\mathrm{{d}}T / K) = {parameter_file['EAGLEAGN']['AGN_delta_T_K']:.4g}$)</li>
+            <li>AGN $C_{{\\rm eff}} = {parameter_file['EAGLEAGN']['coupling_efficiency']:.4g}$</li>
+            <li>AGN Visocous $\\alpha = {latex_float(parameter_file['EAGLEAGN']['viscous_alpha'])}$</li>
+        </ul>
+        </ul>
+        """
+
 with open("description.html", "w") as handle:
-    handle.write(output)
+    handle.write(output+output2)
