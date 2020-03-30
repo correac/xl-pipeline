@@ -12,17 +12,28 @@ with open(sys.argv[1], "r") as handle:
 parameter_output_filename = "parameters.txt"
 
 agn_parameters = {
-    "dT": f"{input_data['EAGLEAGN']['AGN_delta_T_K']:e}",
+    "dT": f"{float(input_data['EAGLEAGN']['AGN_delta_T_K']):10.3e}",
     "Ceff": f"{input_data['EAGLEAGN']['coupling_efficiency']:3.3f}",
-    "Va": f"{input_data['EAGLEAGN']['viscous_alpha']:e}",
+    "Va": f"{float(input_data['EAGLEAGN']['viscous_alpha']):10.3e}",
 }
-SNII_parameters = {
-    "min": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_min']:3.3f}",
-    "max": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_max']:3.3f}",
-    "n_0": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:3.3f}",
-    "n_Z": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_n_Z']:3.3f}",
-    "n_n": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_n_n']:3.3f}",
-}
+if 'colibre' in sys.argv[1]:
+    SNII_parameters = {
+        "min": f"{input_data['COLIBREFeedback']['SNII_energy_fraction_min']:3.3f}",
+        "max": f"{input_data['COLIBREFeedback']['SNII_energy_fraction_max']:3.3f}",
+        "n_0": f"{input_data['COLIBREFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:3.3f}",
+        "n_Z": f"{input_data['COLIBREFeedback']['SNII_energy_fraction_n_Z']:3.3f}",
+        "n_n": f"{input_data['COLIBREFeedback']['SNII_energy_fraction_n_n']:3.3f}",
+        "ene": f"{float(input_data['COLIBREFeedback']['SNII_energy_erg']):10.3e}",
+    }
+else:
+    SNII_parameters = {
+        "min": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_min']:3.3f}",
+        "max": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_max']:3.3f}",
+        "n_0": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:3.3f}",
+        "n_Z": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_n_Z']:3.3f}",
+        "n_n": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_n_n']:3.3f}",
+    }
+
 
 output = ""
 

@@ -45,7 +45,7 @@ ax.loglog()
 # Simulation data plotting
 
 # High z-order as we always want these to be on top of the observations
-ax.plot(scale_factor, SNIa_rate, label=name, zorder=10000)
+ax.plot(scale_factor, SNIa_rate, label=run_name, zorder=10000)
 
 # Observational data plotting
 
