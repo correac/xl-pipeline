@@ -105,7 +105,7 @@ plot_run () {
 # Creates a summary plot based on the above created figures, and converts
 # sub-grid parameters to a text file to be plotted.
 # Also converts data to Ian Vernon's specific format. Assumes that this parameter
-# file is called eagle_25.yml
+# file is called eagle_*.yml
 create_summary_plot () {
   run_directory=$1
   run_name=$2
@@ -118,11 +118,18 @@ create_summary_plot () {
   old_directory=$(pwd)
   cd $output_path
 
-  python3 $old_directory/data_conversion/parameters.py "${run_directory}/eagle_25.yml"
-  python3 $old_directory/data_conversion/catalogue.py
-  
   # Copy in the index.html file for summary web viewing
-  cp $old_directory/index.html .
+  cp $run_directory/eagle_*.yml .
+  chmod a+r eagle_*.yml
+  cp $old_directory/data_conversion/index.html .
+
+  python3 $old_directory/data_conversion/parameters.py eagle_*.yml
+  python3 $old_directory/data_conversion/catalogue.py
+  python3 $old_directory/data_conversion/description.py $run_directory/$snapshot_name eagle_*.yml
+
+  sed -i -e "/RUN_DESCRIPTION/r description.html" -e "/RUN_DESCRIPTION/d" index.html
+  boxsize=$(cat boxsize_integer.txt)
+  sed -i "s/BOX_SIZE/${boxsize}/g" index.html
 
   magick montage -geometry +4+4 \
     stellar_mass_function_100.png \
@@ -132,9 +139,9 @@ create_summary_plot () {
     stellar_mass_black_hole_mass_100.png \
     stellar_mass_specific_sfr_100.png \
     stellar_mass_passive_fraction_100.png \
-    tully_fisher_100.png \
+    stellar_mass_gas_sf_metallicity_100.png \
+    stellar_mass_star_metallicity_100.png \
     stellar_veldisp_black_hole_mass_10.png \
-    density_temperature.png \
     density_temperature_metals.png \
     star_formation_history.png \
     montage.png
