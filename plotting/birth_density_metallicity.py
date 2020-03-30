@@ -78,9 +78,9 @@ mappable = ax.pcolormesh(
     birth_density_bins.value,
     metal_mass_fraction_bins.value,
     f_E_grid,
-    norm=Normalize(0, 5),
+    norm=LogNorm(1e-2, 1e1),
 )
-fig.colorbar(mappable, label="Feedback energy fraction $f_E$")
+fig.colorbar(mappable, label="Feedback energy fraction $f_E$", pad=0)
 
 H, _, _ = np.histogram2d(
     (data.stars.birth_densities / mh).to(1 / cm ** 3).value,
