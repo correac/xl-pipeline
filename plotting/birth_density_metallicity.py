@@ -19,7 +19,6 @@ run_name = sys.argv[1]
 run_directory = sys.argv[2]
 snapshot_name = sys.argv[3]
 output_path = sys.argv[4]
-ptype = sys.argv[5]
 
 snapshot_filename = f"{run_directory}/{snapshot_name}"
 
