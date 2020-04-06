@@ -493,12 +493,6 @@ if __name__ == "__main__":
     snapshot_path = sys.argv[1]
     velociraptor_base_name = sys.argv[2]
     output_path = sys.argv[3]
-    ptype = sys.argv[4]
-
-    if "COLIBRE" in ptype:
-        halo_ids = range(0, 1)
-    else:
-        halo_ids = range(0, 100)
 
     if not os.path.exists(output_path):
         os.mkdir(output_path)
@@ -524,19 +518,23 @@ if __name__ == "__main__":
     catalogue = load(velociraptor_properties)
     groups = load_groups(velociraptor_groups, catalogue)
 
+    halo_ids = np.arange(len(catalogue.masses.mass_200mean))[
+        np.logical_and(
+            catalogue.structure_type.structuretype == 10,
+            catalogue.apertures.mass_star_30_kpc
+            > unyt_quantity(1e9, units="Solar_Mass"),
+        )
+    ]
+
     for halo_id in halo_ids:
         try:
-            particles, unbound_particles = groups.extract_halo(
-                halo_id, filenames=filenames
-            )
+            particles, _ = groups.extract_halo(halo_id, filenames=filenames)
         except:
             # Probably parttypes / partypes mix up
             filenames = {
                 k: v.replace("parttypes", "partypes") for k, v in filenames.items()
             }
-            particles, unbound_particles = groups.extract_halo(
-                halo_id, filenames=filenames
-            )
+            particles, _ = groups.extract_halo(halo_id, filenames=filenames)
 
         halo_mass = catalogue.masses.mass_200mean[halo_id].to("Solar_Mass")
         stellar_mass = catalogue.apertures.mass_star_30_kpc[halo_id].to("Solar_Mass")
