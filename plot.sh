@@ -22,7 +22,6 @@ plot_run () {
   plot_directory=$3
   snapshot_name=$4
   catalogue_name=$5
-  ptype=$6
 
   catalogue_path=$run_directory/$catalogue_name
   output_path=$plot_directory/$run_name
@@ -115,27 +114,20 @@ create_summary_plot () {
   plot_directory=$3
   snapshot_name=$4
   catalogue_name=$5
-  ptype=$6
 
   output_path=$plot_directory/$run_name
 
   old_directory=$(pwd)
   cd $output_path
 
-  if [ "$ptype" = "COLIBRE" ]; then
-        tstring="colibre"
-  else
-        tstring="eagle"
-  fi
-
   # Copy in the index.html file for summary web viewing
-  cp $run_directory/$tstring_*.yml .
-  chmod a+r $tstring_*.yml
+  cp $run_directory/{colibre,eagle}_*.yml .
+  chmod a+r {colibre,eagle}_*.yml
   cp $old_directory/data_conversion/index.html .
 
-  python3 $old_directory/data_conversion/parameters.py $tstring_*.yml
+  python3 $old_directory/data_conversion/parameters.py {colibre,eagle}_*.yml
   python3 $old_directory/data_conversion/catalogue.py
-  python3 $old_directory/data_conversion/description.py $run_directory/$snapshot_name $tstring_*.yml
+  python3 $old_directory/data_conversion/description.py $run_directory/$snapshot_name {colibre,eagle}_*.yml
 
   sed -i -e "/RUN_DESCRIPTION/r description.html" -e "/RUN_DESCRIPTION/d" index.html
   boxsize=$(cat boxsize_integer.txt)

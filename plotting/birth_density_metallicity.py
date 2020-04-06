@@ -28,7 +28,7 @@ plt.style.use("mnras.mplstyle")
 data = load(snapshot_filename)
 used_parameters = data.metadata.parameters
 
-if "COLIBRE" in ptype:
+try:  # COLIBRE Parameters
     parameters = {
         k: float(used_parameters[v])
         for k, v in {
@@ -41,7 +41,7 @@ if "COLIBRE" in ptype:
             "ener": "COLIBREFeedback:SNII_energy_erg",
         }.items()
     }
-else:
+except:  # EAGLE
     parameters = {
         k: float(used_parameters[v])
         for k, v in {
@@ -99,23 +99,21 @@ mappable = ax.pcolormesh(
 )
 fig.colorbar(mappable, label="Feedback energy fraction $f_E$", pad=0)
 
-if "COLIBRE" in ptype:
-    H, _, _ = np.histogram2d(
-        (data.stars.birth_densities / mh).to(1 / cm ** 3).value,
-        data.stars.metal_mass_fractions.value,
-        bins=[birth_density_bins.value, metal_mass_fraction_bins.value],
-    )
-else:
-    H, _, _ = np.histogram2d(
-        (data.stars.birth_densities / mh).to(1 / cm ** 3).value,
-        data.stars.smoothed_metal_mass_fractions.value,
-        bins=[birth_density_bins.value, metal_mass_fraction_bins.value],
-    )
+try:
+    metal_mass_fractions = data.stars.smoothed_metal_mass_fractions.value
+except AttributeError:
+    metal_mass_fractions = data.stars.metal_mass_fractions.value
+
+H, _, _ = np.histogram2d(
+    (data.stars.birth_densities / mh).to(1 / cm ** 3).value,
+    metal_mass_fractions,
+    bins=[birth_density_bins.value, metal_mass_fraction_bins.value],
+)
 
 ax.contour(birth_density_grid, metal_mass_fraction_grid, H.T, levels=6, cmap="Pastel1")
 
 # Add line showing SF law
-if not ("COLIBRE" in ptype):
+try:
     sf_threshold_density = star_formation_parameters["threshold_n0"] * (
         metal_mass_fraction_bins.value / star_formation_parameters["threshold_Z0"]
     ) ** (star_formation_parameters["slope"])
@@ -125,6 +123,8 @@ if not ("COLIBRE" in ptype):
         linestyle="dashed",
         label="SF threshold",
     )
+except:
+    pass
 
 legend = ax.legend(markerfirst=True, loc="lower left")
 plt.setp(legend.get_texts(), color="white")

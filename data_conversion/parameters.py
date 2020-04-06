@@ -16,7 +16,8 @@ agn_parameters = {
     "Ceff": f"{input_data['EAGLEAGN']['coupling_efficiency']:3.3f}",
     "Va": f"{float(input_data['EAGLEAGN']['viscous_alpha']):10.3e}",
 }
-if 'colibre' in sys.argv[1]:
+
+try:
     SNII_parameters = {
         "min": f"{input_data['COLIBREFeedback']['SNII_energy_fraction_min']:3.3f}",
         "max": f"{input_data['COLIBREFeedback']['SNII_energy_fraction_max']:3.3f}",
@@ -25,7 +26,7 @@ if 'colibre' in sys.argv[1]:
         "n_n": f"{input_data['COLIBREFeedback']['SNII_energy_fraction_n_n']:3.3f}",
         "ene": f"{float(input_data['COLIBREFeedback']['SNII_energy_erg']):10.3e}",
     }
-else:
+except KeyError:
     SNII_parameters = {
         "min": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_min']:3.3f}",
         "max": f"{input_data['EAGLEFeedback']['SNII_energy_fraction_max']:3.3f}",

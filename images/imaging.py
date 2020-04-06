@@ -245,7 +245,7 @@ def create_plot(
     """
 
     fig, ax = plt.subplots(figsize=(8, 8), dpi=image_attributes.resolution // 8)
-    #fig.subplots_adjust(0, 0, 1, 1)
+    # fig.subplots_adjust(0, 0, 1, 1)
     ax.axis("off")
 
     if image_attributes.vmin is not None:
@@ -271,7 +271,7 @@ def create_plot(
     ax.set_facecolor(image_attributes.plot_background_color)
 
     divider = make_axes_locatable(ax)
-    cax = divider.append_axes('right', size='5%', pad=0.05)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
 
     im = ax.imshow(
         image.value.T,
@@ -280,8 +280,8 @@ def create_plot(
         cmap=image_attributes.cmap,
         extent=extent,
     )
-   
-    fig.colorbar(im, cax=cax, orientation='vertical')
+
+    fig.colorbar(im, cax=cax, orientation="vertical")
 
     return fig, ax
 
@@ -506,42 +506,37 @@ if __name__ == "__main__":
     velociraptor_properties = velociraptor_base_name
     velociraptor_groups = velociraptor_base_name.replace("properties", "catalog_groups")
 
-    if "COLIBRE" in ptype:
-        filenames = {
-            "parttypes_filename": velociraptor_base_name.replace(
-                "properties", "catalog_parttypes"
-            ),
-            "particles_filename": velociraptor_base_name.replace(
-                "properties", "catalog_particles"
-            ),
-            "unbound_parttypes_filename": velociraptor_base_name.replace(
-                "properties", "catalog_parttypes.unbound"
-            ),
-            "unbound_particles_filename": velociraptor_base_name.replace(
-                "properties", "catalog_particles.unbound"
-            ),
-        }
-    else:
-        filenames = {
-            "parttypes_filename": velociraptor_base_name.replace(
-                "properties", "catalog_partypes"
-            ),
-            "particles_filename": velociraptor_base_name.replace(
-                "properties", "catalog_particles"
-            ),
-            "unbound_parttypes_filename": velociraptor_base_name.replace(
-                "properties", "catalog_partypes.unbound"
-            ),
-            "unbound_particles_filename": velociraptor_base_name.replace(
-                "properties", "catalog_particles.unbound"
-            ),
-        }
+    filenames = {
+        "parttypes_filename": velociraptor_base_name.replace(
+            "properties", "catalog_parttypes"
+        ),
+        "particles_filename": velociraptor_base_name.replace(
+            "properties", "catalog_particles"
+        ),
+        "unbound_parttypes_filename": velociraptor_base_name.replace(
+            "properties", "catalog_parttypes.unbound"
+        ),
+        "unbound_particles_filename": velociraptor_base_name.replace(
+            "properties", "catalog_particles.unbound"
+        ),
+    }
 
     catalogue = load(velociraptor_properties)
     groups = load_groups(velociraptor_groups, catalogue)
 
     for halo_id in halo_ids:
-        particles, unbound_particles = groups.extract_halo(halo_id, filenames=filenames)
+        try:
+            particles, unbound_particles = groups.extract_halo(
+                halo_id, filenames=filenames
+            )
+        except:
+            # Probably parttypes / partypes mix up
+            filenames = {
+                k: v.replace("parttypes", "partypes") for k, v in filenames.items()
+            }
+            particles, unbound_particles = groups.extract_halo(
+                halo_id, filenames=filenames
+            )
 
         halo_mass = catalogue.masses.mass_200mean[halo_id].to("Solar_Mass")
         stellar_mass = catalogue.apertures.mass_star_30_kpc[halo_id].to("Solar_Mass")
@@ -560,35 +555,28 @@ if __name__ == "__main__":
         x = particles.x_mbp / data.metadata.a
         y = particles.y_mbp / data.metadata.a
         z = particles.z_mbp / data.metadata.a
-        if "COLIBRE" in ptype:
-                r = 0.1 * particles.r_200crit / data.metadata.a
-        else:
-                r = particles.r_200crit / data.metadata.a
+
+        # We have different defaults for COLIBRE/EAGLE
+        subgrid_is_colibre = (
+            data.metadata.subgrid_scheme["Chemistry Model"].decode("utf-8") == "COLIBRE"
+        )
+
+        r_factor = 0.1 if subgrid_is_colibre else 1.0
+        r = r_factor * particles.r_200crit / data.metadata.a
+        radius_name = f"{r_factor if r_factor != 1.0 else ''} $R_{{200, \\rm{{crit}}}}$"
 
         halo_center = unyt_array([x, y, z])
 
-        if "COLIBRE" in ptype:
-            galaxy_attributes = GalaxyAttributes(
-                center=halo_center,
-                radius=r,
-                normal_vector=norm_vector,
-                redshift=data.metadata.z,
-                unique_id=halo_id,
-                halo_mass=halo_mass,
-                stellar_mass=stellar_mass,
-                radius_name="0.1 $R_{200, \\rm{crit}}$",
-            )
-        else:
-            galaxy_attributes = GalaxyAttributes(
-                center=halo_center,
-                radius=r,
-                normal_vector=norm_vector,
-                redshift=data.metadata.z,
-                unique_id=halo_id,
-                halo_mass=halo_mass,
-                stellar_mass=stellar_mass,
-                radius_name="$R_{200, \\rm{crit}}$",
-            )
+        galaxy_attributes = GalaxyAttributes(
+            center=halo_center,
+            radius=r,
+            normal_vector=norm_vector,
+            redshift=data.metadata.z,
+            unique_id=halo_id,
+            halo_mass=halo_mass,
+            stellar_mass=stellar_mass,
+            radius_name=radius_name,
+        )
 
         if recalculate_stellar_smoothing_lengths:
             data.stars.smoothing_lengths = generate_smoothing_lengths(

@@ -36,9 +36,6 @@ def read_obs_data(path="plotting/sn1a_data"):
 
     hcorr = log10(h) - log10(0.7)  # h^-2 for SFR, h^-3 for volume
 
-    import os
-    cwd = os.getcwd()
- 
     z, ratenu, sys_err_p, sys_err_m, stat = loadtxt(
         f"{path}/SNIa_rate_frohmaier.dat", unpack=True
     )
