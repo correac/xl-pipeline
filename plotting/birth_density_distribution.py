@@ -53,9 +53,21 @@ fig, ax = plt.subplots()
 
 ax.loglog()
 
-for label, data in birth_densities_by_redshift.items():
+for index, (label, data) in enumerate(birth_densities_by_redshift.items()):
     H, _ = np.histogram(data, bins=birth_density_bins)
-    ax.plot(birth_density_centers, H / log_birth_density_bin_width, label=label)
+    ax.plot(
+        birth_density_centers,
+        H / log_birth_density_bin_width,
+        label=label,
+        color=f"C{index}",
+    )
+    ax.axvline(
+        birth_density_centers.median(),
+        color=f"C{index}",
+        linestyle="dashed",
+        zorder=-10,
+        alpha=0.5,
+    )
 
 
 ax.legend(loc="lower center")
