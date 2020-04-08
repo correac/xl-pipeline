@@ -62,7 +62,7 @@ for index, (label, data) in enumerate(birth_densities_by_redshift.items()):
         color=f"C{index}",
     )
     ax.axvline(
-        birth_density_centers.median(),
+        np.median(birth_density_centers),
         color=f"C{index}",
         linestyle="dashed",
         zorder=-10,
