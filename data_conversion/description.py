@@ -30,6 +30,10 @@ with open("boxsize_integer.txt", "w") as handle:
 with open(sys.argv[2], "r") as handle:
     parameter_file = yaml.load(handle, Loader=yaml.Loader)
 
+try:
+    run_name = data.metadata.run_name.decode("utf-8").replace('!!python/unicode', '')
+except:
+    run_name = ""
 
 # Need to build the feedback parameters list.
 
@@ -93,7 +97,7 @@ except KeyError:
 
 # Now generate HTML
 output = f"""<ul>
-<li><b>Run Name</b>: {data.metadata.run_name.decode("utf-8").replace('!!python/unicode', '')}</li>
+<li><b>Run Name</b>: {run_name}</li>
 <li><b>Boxsize</b>: {str(data.metadata.boxsize)}</li>
 <li><b>Cube root of particle number</b>: {int(data.metadata.n_dark_matter**(1/3)+0.01)}</li>
 <li><b>Number of particles at $z={data.metadata.z:2.2f}$</b>:
