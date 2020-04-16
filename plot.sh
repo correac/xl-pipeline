@@ -116,16 +116,20 @@ create_summary_plot () {
   output_path=$plot_directory/$run_name
 
   old_directory=$(pwd)
+
   cd $output_path
 
   # Copy in the index.html file for summary web viewing
   cp $run_directory/{colibre,eagle}_*.yml .
-  chmod a+r {colibre,eagle}_*.yml
+  parameter_file_name=$(ls {colibre,eagle}_*.yml 2>/dev/null)
+  chmod a+r $parameter_file_name
   cp $old_directory/data_conversion/index.html .
+  echo "OLD, RUN, PFILE"
+  echo $old_directory $run_directory $parameter_file_name
 
-  python3 $old_directory/data_conversion/parameters.py {colibre,eagle}_*.yml
+  python3 $old_directory/data_conversion/parameters.py $parameter_file_name
   python3 $old_directory/data_conversion/catalogue.py
-  python3 $old_directory/data_conversion/description.py $run_directory/$snapshot_name {colibre,eagle}_*.yml
+  python3 $old_directory/data_conversion/description.py $run_directory/$snapshot_name $parameter_file_name
 
   sed -i -e "/RUN_DESCRIPTION/r description.html" -e "/RUN_DESCRIPTION/d" index.html
   boxsize=$(cat boxsize_integer.txt)
