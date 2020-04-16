@@ -11,8 +11,6 @@ import matplotlib.pyplot as plt
 import yaml
 import unyt
 
-unyt.matplotlib_support.label_style = "[]"
-
 from typing import Union, List, Dict
 from velociraptor.autoplotter.objects import VelociraptorPlot, valid_line_types
 from velociraptor.autoplotter.plot import decorate_axes
@@ -108,8 +106,8 @@ def recreate_single_figure(
         line = getattr(plot, f"{line_type}_line", None)
         if line is not None:
             for name, data in line_data.items():
-                horizontal_name = data[plot.filename].get("x_label")
-                vertical_name = data[plot.filename].get("y_label")
+                ax.set_xlabel(data[plot.filename].get("x_label"))
+                ax.set_ylabel(data[plot.filename].get("y_label"))
 
                 this_line_dict = data[plot.filename]["lines"][line_type]
                 centers = unyt.unyt_array(
@@ -289,14 +287,13 @@ if __name__ == "__main__":
     line_data = load_yaml_line_data(paths=args.input, names=args.titles)
 
     for plot in auto_plotter.plots:
-        with unyt.matplotlib_support:
-            try:
-                recreate_single_figure(
-                    plot=plot,
-                    line_data=line_data,
-                    output_directory=args.output,
-                    file_type=args.file_type,
-                )
-            except:
-                print_if_debug(f"Failed to create plot for {plot.filename}.")
+        try:
+            recreate_single_figure(
+                plot=plot,
+                line_data=line_data,
+                output_directory=args.output,
+                file_type=args.file_type,
+            )
+        except:
+            print_if_debug(f"Failed to create plot for {plot.filename}.")
 
