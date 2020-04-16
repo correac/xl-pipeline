@@ -57,7 +57,7 @@ for label, data in metallicities.items():
 
 
 ax.legend(loc="upper right")
-ax.set_xlabel(f"{'Smoothed ' if smoothed else ''}Metal Mass Fractions $Z$ []"))
+ax.set_xlabel(f"{'Smoothed ' if smoothed else ''}Metal Mass Fractions $Z$ []")
 ax.set_ylabel("Number of Particles / d$\\log Z$")
 
 fig.savefig(f"{output_path}/metallicity_distribution.png")

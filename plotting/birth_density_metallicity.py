@@ -131,6 +131,12 @@ plt.setp(legend.get_texts(), color="white")
 ax.set_xlabel("Stellar Birth Density [$n_H$ cm$^{-3}$]")
 ax.set_ylabel("Smoothed Metal Mass Fraction $Z$ []")
 
+try:
+    fontsize=legend.get_texts()[0].get_fontsize()
+except:
+    fontsize=6
+
+
 ax.text(
     0.975,
     0.025,
@@ -141,7 +147,7 @@ ax.text(
     transform=ax.transAxes,
     ha="right",
     va="bottom",
-    fontsize=legend.get_texts()[0].get_fontsize(),
+    fontsize=fontsize,
 )
 
 ax.text(
@@ -152,7 +158,7 @@ ax.text(
     transform=ax.transAxes,
     ha="right",
     va="top",
-    fontsize=legend.get_texts()[0].get_fontsize(),
+    fontsize=fontsize,
 )
 
 fig.savefig(f"{output_path}/birth_density_metallicity.png")
