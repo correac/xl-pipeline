@@ -110,12 +110,8 @@ def recreate_single_figure(
                 ax.set_ylabel(data[plot.filename].get("y_label"))
 
                 this_line_dict = data[plot.filename]["lines"][line_type]
-                centers = unyt.unyt_array(
-                    this_line_dict["centers"], units=plot.x_units, name=horizontal_name
-                )
-                heights = unyt.unyt_array(
-                    this_line_dict["values"], units=plot.y_units, name=vertical_name
-                )
+                centers = unyt.unyt_array(this_line_dict["centers"], units=plot.x_units)
+                heights = unyt.unyt_array(this_line_dict["values"], units=plot.y_units)
                 errors = unyt.unyt_array(this_line_dict["scatter"], units=plot.y_units)
 
                 if line.scatter == "none":
@@ -123,7 +119,7 @@ def recreate_single_figure(
                 elif line.scatter == "errorbar":
                     ax.errorbar(centers, heights, yerr=errors, label=name)
                 elif line.scatter == "shaded":
-                    mpl_line, = ax.plot(centers, heights, label=name)
+                    (mpl_line,) = ax.plot(centers, heights, label=name)
 
                     # Deal with different + and -ve errors
                     if errors.shape[0]:
@@ -296,4 +292,3 @@ if __name__ == "__main__":
             )
         except:
             print_if_debug(f"Failed to create plot for {plot.filename}.")
-
