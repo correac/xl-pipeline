@@ -62,7 +62,7 @@ for index, (label, data) in enumerate(birth_densities_by_redshift.items()):
         color=f"C{index}",
     )
     ax.axvline(
-        np.median(birth_density_centers),
+        np.median(data),
         color=f"C{index}",
         linestyle="dashed",
         zorder=-10,
@@ -70,7 +70,7 @@ for index, (label, data) in enumerate(birth_densities_by_redshift.items()):
     )
 
 
-ax.legend(loc="lower center")
+ax.legend(loc="upper left")
 ax.set_xlabel("Stellar Birth Density $\\rho_B$ [$n_H$ cm$^{-3}$]")
 ax.set_ylabel("Number of Stars / d$\\log\\rho_B$")
 
