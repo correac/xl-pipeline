@@ -126,7 +126,7 @@ ax.set_xlim(1.02, 0.10)
 ax.set_ylim(1e-5, 2e-4)
 
 observation_legend = ax.legend(
-    observation_lines, observation_labels, markerfirst=True, loc=3, fontsize=6, ncol=2
+    observation_lines, observation_labels, markerfirst=True, loc=3, fontsize=4, ncol=2
 )
 
 fig.tight_layout()
