@@ -45,7 +45,7 @@ try:
         <li>$f_{{\\rm E, min}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_min']:.4g}$</li>
         <li>$f_{{\\rm E, max}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_max']:.4g}$</li>
         <li>$n_Z = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
-        <li>$n_0 = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
+        <li>$n_{{\\rm H, 0}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
         <li>$n_n = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>"""
 except KeyError:
     pass
@@ -56,7 +56,7 @@ try:
         <li>$f_{{\\rm E, min}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_min']:.4g}$</li>
         <li>$f_{{\\rm E, max}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_max']:.4g}$</li>
         <li>$n_Z = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
-        <li>$n_0 = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
+        <li>$n_{{\\rm H, 0}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
         <li>$n_n = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>"""
 except KeyError:
     pass
