@@ -11,11 +11,14 @@ with open(sys.argv[1], "r") as handle:
 
 parameter_output_filename = "parameters.txt"
 
-agn_parameters = {
-    "dT": f"{float(input_data['EAGLEAGN']['AGN_delta_T_K']):10.3e}",
-    "Ceff": f"{input_data['EAGLEAGN']['coupling_efficiency']:3.3f}",
-    "Va": f"{float(input_data['EAGLEAGN']['viscous_alpha']):10.3e}",
-}
+try:
+    agn_parameters = {
+        "dT": f"{float(input_data['EAGLEAGN']['AGN_delta_T_K']):10.3e}",
+        "Ceff": f"{input_data['EAGLEAGN']['coupling_efficiency']:3.3f}",
+        "Va": f"{float(input_data['EAGLEAGN']['viscous_alpha']):10.3e}",
+    }
+except KeyError:
+    agn_parameters = {}
 
 try:
     SNII_parameters = {

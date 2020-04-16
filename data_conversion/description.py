@@ -64,10 +64,30 @@ try:
     agn_feedback = f"""
         <li>
           AGN $\\mathrm{{d}}T = {parameter_file['EAGLEAGN']['AGN_delta_T_K']}$
-          ($\\log_{{10}}(\\mathrm{{d}}T / K) = {log10(parameter_file['EAGLEAGN']['AGN_delta_T_K']})}$)
+          ($\\log_{{10}}(\\mathrm{{d}}T / K) = {log10(float(parameter_file['EAGLEAGN']['AGN_delta_T_K']))}$)
         </li>
         <li>AGN $C_{{\\rm eff}} = {parameter_file['EAGLEAGN']['coupling_efficiency']:.4g}$</li>
         <li>AGN Visocous $\\alpha = {parameter_file['EAGLEAGN']['viscous_alpha']}$</li>"""
+except KeyError:
+    pass
+
+try:
+    agn_feedback = f"""
+        <li>
+          AGN $\\mathrm{{d}}T = {parameter_file['COLIBREAGN']['AGN_delta_T_K']}$
+          ($\\log_{{10}}(\\mathrm{{d}}T / K) = {log10(float(parameter_file['COLIBREAGN']['AGN_delta_T_K']))}$)
+        </li>
+        <li>AGN $C_{{\\rm eff}} = {parameter_file['COLIBREAGN']['coupling_efficiency']:.4g}$</li>
+        <li>AGN Visocous $\\alpha = {parameter_file['COLIBREAGN']['viscous_alpha']}$</li>"""
+    try:
+        # Possible additional AGN parameters
+        agn_feedback += f"""
+        <li>Subgrid quantities for Bondi = {parameter_file['COLIBREAGN']['subgrid_bondi']}</li>
+        <li>Multi-phase Bondi = {parameter_file['COLIBREAGN']['multi_phase_bondi']}</li>
+        <li>Reposition base velocity = {parameter_file['COLIBREAGN']['reposition_coefficient_upsilon']}</li>
+        """
+    except KeyError:
+        pass
 except KeyError:
     pass
 
