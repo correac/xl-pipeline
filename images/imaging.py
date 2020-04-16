@@ -21,6 +21,8 @@ import numpy as np
 
 from matplotlib.colors import LogNorm
 from matplotlib.patches import Circle
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+
 from unyt import unyt_quantity, unyt_array
 
 from swiftsimio.visualisation.projection import project_pixel_grid
@@ -243,7 +245,7 @@ def create_plot(
     """
 
     fig, ax = plt.subplots(figsize=(8, 8), dpi=image_attributes.resolution // 8)
-    fig.subplots_adjust(0, 0, 1, 1)
+    # fig.subplots_adjust(0, 0, 1, 1)
     ax.axis("off")
 
     if image_attributes.vmin is not None:
@@ -268,13 +270,18 @@ def create_plot(
 
     ax.set_facecolor(image_attributes.plot_background_color)
 
-    ax.imshow(
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+
+    im = ax.imshow(
         image.value.T,
         origin="lower",
         norm=norm,
         cmap=image_attributes.cmap,
         extent=extent,
     )
+
+    fig.colorbar(im, cax=cax, orientation="vertical")
 
     return fig, ax
 
@@ -487,8 +494,6 @@ if __name__ == "__main__":
     velociraptor_base_name = sys.argv[2]
     output_path = sys.argv[3]
 
-    halo_ids = range(0, 100)
-
     if not os.path.exists(output_path):
         os.mkdir(output_path)
 
@@ -497,13 +502,13 @@ if __name__ == "__main__":
 
     filenames = {
         "parttypes_filename": velociraptor_base_name.replace(
-            "properties", "catalog_partypes"
+            "properties", "catalog_parttypes"
         ),
         "particles_filename": velociraptor_base_name.replace(
             "properties", "catalog_particles"
         ),
         "unbound_parttypes_filename": velociraptor_base_name.replace(
-            "properties", "catalog_partypes.unbound"
+            "properties", "catalog_parttypes.unbound"
         ),
         "unbound_particles_filename": velociraptor_base_name.replace(
             "properties", "catalog_particles.unbound"
@@ -513,8 +518,23 @@ if __name__ == "__main__":
     catalogue = load(velociraptor_properties)
     groups = load_groups(velociraptor_groups, catalogue)
 
+    halo_ids = np.arange(len(catalogue.masses.mass_200mean))[
+        np.logical_and(
+            catalogue.structure_type.structuretype == 10,
+            catalogue.apertures.mass_star_30_kpc
+            > unyt_quantity(1e9, units="Solar_Mass"),
+        )
+    ]
+
     for halo_id in halo_ids:
-        particles, unbound_particles = groups.extract_halo(halo_id, filenames=filenames)
+        try:
+            particles, _ = groups.extract_halo(halo_id, filenames=filenames)
+        except:
+            # Probably parttypes / partypes mix up
+            filenames = {
+                k: v.replace("parttypes", "partypes") for k, v in filenames.items()
+            }
+            particles, _ = groups.extract_halo(halo_id, filenames=filenames)
 
         halo_mass = catalogue.masses.mass_200mean[halo_id].to("Solar_Mass")
         stellar_mass = catalogue.apertures.mass_star_30_kpc[halo_id].to("Solar_Mass")
@@ -533,7 +553,15 @@ if __name__ == "__main__":
         x = particles.x_mbp / data.metadata.a
         y = particles.y_mbp / data.metadata.a
         z = particles.z_mbp / data.metadata.a
-        r = particles.r_200crit / data.metadata.a
+
+        # We have different defaults for COLIBRE/EAGLE
+        subgrid_is_colibre = (
+            data.metadata.subgrid_scheme["Chemistry Model"].decode("utf-8") == "COLIBRE"
+        )
+
+        r_factor = 0.1 if subgrid_is_colibre else 1.0
+        r = r_factor * particles.r_200crit / data.metadata.a
+        radius_name = f"{r_factor if r_factor != 1.0 else ''} $R_{{200, \\rm{{crit}}}}$"
 
         halo_center = unyt_array([x, y, z])
 
@@ -545,7 +573,7 @@ if __name__ == "__main__":
             unique_id=halo_id,
             halo_mass=halo_mass,
             stellar_mass=stellar_mass,
-            radius_name="$R_{200, \\rm{crit}}$",
+            radius_name=radius_name,
         )
 
         if recalculate_stellar_smoothing_lengths:

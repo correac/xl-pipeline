@@ -27,7 +27,7 @@ class ObservationalData(object):
             self.fitting_formula = False
 
 
-def read_obs_data(path="observational_data"):
+def read_obs_data(path="plotting/sn1a_data"):
     """
     Reads the observational data
     """

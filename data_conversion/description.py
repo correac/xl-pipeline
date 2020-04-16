@@ -8,6 +8,7 @@ Requires two parameters: path to snapshot, and path to yaml file.
 
 import yaml
 from swiftsimio import load
+from numpy import log10
 
 import sys
 
@@ -22,11 +23,53 @@ def latex_float(f):
 
 
 data = load(sys.argv[1])
-with open(sys.argv[2], "r") as handle:
-    parameter_file = yaml.load(handle, Loader=yaml.Loader)
 
 with open("boxsize_integer.txt", "w") as handle:
     handle.write("%d" % int(data.metadata.boxsize[0].value + 0.1))
+
+with open(sys.argv[2], "r") as handle:
+    parameter_file = yaml.load(handle, Loader=yaml.Loader)
+
+
+# Need to build the feedback parameters list.
+
+# Supernovae feedback
+supernova_feedback = "<li>Unknown supernovae feedback subgrid model</li>"
+
+try:
+    supernova_feedback = f"""
+        <li>$f_{{\\rm E, min}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_min']:.4g}$</li>
+        <li>$f_{{\\rm E, max}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_max']:.4g}$</li>
+        <li>$n_Z = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
+        <li>$n_0 = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
+        <li>$n_n = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>"""
+except KeyError:
+    pass
+
+try:
+    supernova_feedback = f"""
+        <li>$E = {parameter_file['COLIBREFeedback']['SNII_energy_erg']}$</li>
+        <li>$f_{{\\rm E, min}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_min']:.4g}$</li>
+        <li>$f_{{\\rm E, max}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_max']:.4g}$</li>
+        <li>$n_Z = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
+        <li>$n_0 = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
+        <li>$n_n = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>"""
+except KeyError:
+    pass
+
+# AGN / Black hole model
+agn_feedback = "<li>Unknown black hole model</li>"
+
+try:
+    agn_feedback = f"""
+        <li>
+          AGN $\\mathrm{{d}}T = {parameter_file['EAGLEAGN']['AGN_delta_T_K']}$
+          ($\\log_{{10}}(\\mathrm{{d}}T / K) = {log10(parameter_file['EAGLEAGN']['AGN_delta_T_K']})}$)
+        </li>
+        <li>AGN $C_{{\\rm eff}} = {parameter_file['EAGLEAGN']['coupling_efficiency']:.4g}$</li>
+        <li>AGN Visocous $\\alpha = {parameter_file['EAGLEAGN']['viscous_alpha']}$</li>"""
+except KeyError:
+    pass
 
 # Now generate HTML
 output = f"""<ul>
@@ -56,16 +99,10 @@ output = f"""<ul>
 <li><b>Code info</b>: {data.metadata.code_info}</li>
 <li><b>Compiler info</b>: {data.metadata.compiler_info}</li>
 <li><b>Hydrodynamics</b>: {data.metadata.hydro_info}</li>
-<li><b>Key parameters</b>:
+<li><b>Subgrid model parameters</b>:
   <ul>
-    <li>$f_{{\\rm E, min}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_min']:.4g}$</li>
-    <li>$f_{{\\rm E, max}} = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_max']:.4g}$</li>
-    <li>$n_Z = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
-    <li>$n_0 = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
-    <li>$n_n = {parameter_file['EAGLEFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>
-    <li>AGN $\\mathrm{{d}}T = {latex_float(parameter_file['EAGLEAGN']['AGN_delta_T_K'])}$ ($\\log_{{10}}(\\mathrm{{d}}T / K) = {parameter_file['EAGLEAGN']['AGN_delta_T_K']:.4g}$)</li>
-    <li>AGN $C_{{\\rm eff}} = {parameter_file['EAGLEAGN']['coupling_efficiency']:.4g}$</li>
-    <li>AGN Visocous $\\alpha = {latex_float(parameter_file['EAGLEAGN']['viscous_alpha'])}$</li>
+    {supernova_feedback}
+    {agn_feedback}
   </ul>
 </ul>
 """

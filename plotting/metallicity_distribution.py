@@ -32,10 +32,18 @@ log_metallicity_bin_width = np.log10(metallicity_bins[1]) - np.log10(
     metallicity_bins[0]
 )
 
-metallicities = {
-    "Gas": data.gas.smoothed_metal_mass_fractions.value,
-    "Stars": data.stars.smoothed_metal_mass_fractions.value,
-}
+try:
+    metallicities = {
+        "Gas": data.gas.smoothed_metal_mass_fractions.value,
+        "Stars": data.stars.smoothed_metal_mass_fractions.value,
+    }
+    smoothed = True
+except AttributeError:
+    metallicities = {
+        "Gas": data.gas.metal_mass_fractions.value,
+        "Stars": data.stars.metal_mass_fractions.value,
+    }
+    smoothed = False
 
 # Begin plotting
 
@@ -49,7 +57,7 @@ for label, data in metallicities.items():
 
 
 ax.legend(loc="upper right")
-ax.set_xlabel("Smoothed Metal Mass Fractions $Z$ []")
+ax.set_xlabel(f"{'Smoothed ' if smoothed else ''}Metal Mass Fractions $Z$ []"))
 ax.set_ylabel("Number of Particles / d$\\log Z$")
 
 fig.savefig(f"{output_path}/metallicity_distribution.png")

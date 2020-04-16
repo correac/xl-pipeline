@@ -63,7 +63,7 @@ plot_run () {
     $run_name \
     $run_directory \
     $snapshot_name \
-    $output_path
+    $output_path \
 
   python3 plotting/birth_density_distribution.py \
     $run_name \
@@ -75,7 +75,7 @@ plot_run () {
     $run_name \
     $run_directory \
     $snapshot_name \
-    $output_path
+    $output_path \
 
   python3 performance/number_of_steps_simulation_time.py \
     $run_name \
@@ -119,13 +119,13 @@ create_summary_plot () {
   cd $output_path
 
   # Copy in the index.html file for summary web viewing
-  cp $run_directory/eagle_*.yml .
-  chmod a+r eagle_*.yml
+  cp $run_directory/{colibre,eagle}_*.yml .
+  chmod a+r {colibre,eagle}_*.yml
   cp $old_directory/data_conversion/index.html .
 
-  python3 $old_directory/data_conversion/parameters.py eagle_*.yml
+  python3 $old_directory/data_conversion/parameters.py {colibre,eagle}_*.yml
   python3 $old_directory/data_conversion/catalogue.py
-  python3 $old_directory/data_conversion/description.py $run_directory/$snapshot_name eagle_*.yml
+  python3 $old_directory/data_conversion/description.py $run_directory/$snapshot_name {colibre,eagle}_*.yml
 
   sed -i -e "/RUN_DESCRIPTION/r description.html" -e "/RUN_DESCRIPTION/d" index.html
   boxsize=$(cat boxsize_integer.txt)
