@@ -24,7 +24,8 @@ stellar_mass_black_hole_mass_30:
   metadata:
     title: Stellar Mass-Black Hole Mass relation (30 kpc Stellar Mass)
   observational_data:
-    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/McConnell2013_Data.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/Sahu2019_ETG.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/Sahu2019_LTG.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/McConnell2013_Fit.hdf5
 
 
@@ -54,7 +55,8 @@ stellar_mass_black_hole_mass_100:
   metadata:
     title: Stellar Mass-Black Hole Mass relation (100 kpc Stellar Mass)
   observational_data:
-    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/McConnell2013_Data.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/Sahu2019_ETG.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/Sahu2019_LTG.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/McConnell2013_Fit.hdf5
 
 
