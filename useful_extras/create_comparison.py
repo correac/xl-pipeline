@@ -111,10 +111,10 @@ def recreate_single_figure(
 
                 this_line_dict = data[plot.filename]["lines"][line_type]
                 centers = unyt.unyt_array(
-                    this_line_dict["centers"], units=plot.x_units, name=horizontal_name
+                    this_line_dict["centers"], units=plot.x_units
                 )
                 heights = unyt.unyt_array(
-                    this_line_dict["values"], units=plot.y_units, name=vertical_name
+                    this_line_dict["values"], units=plot.y_units
                 )
                 errors = unyt.unyt_array(this_line_dict["scatter"], units=plot.y_units)
 
