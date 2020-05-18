@@ -28,16 +28,22 @@ data = load(snapshot_filename)
 
 number_of_bins = 128
 
+f_E_fractions = data.stars.feedback_energy_fractions.value
+mask = f_E_fractions > 0.0
+
+f_E_fractions = f_E_fractions[mask]
+birth_densities = (data.stars.birth_densities[mask] / mh).to(1 / cm**3).value
+
 birth_density_bins = unyt.unyt_array(
     np.logspace(-3, 5, number_of_bins), units=1 / cm ** 3
 )
 feedback_energy_fraction_bins = unyt.unyt_array(
-    np.logspace(-1, 1, number_of_bins), units="dimensionless"
+    np.logspace(-2, 1, number_of_bins), units="dimensionless"
 )
 
 H, density_edges, f_E_edges  = np.histogram2d(
-    (data.stars.birth_densities / mh).to(1 / cm**3).value,
-    data.stars.feedback_energy_fractions.value,
+    birth_densities,
+    f_E_fractions,
     bins=[birth_density_bins, feedback_energy_fraction_bins],
 )
 
@@ -60,17 +66,17 @@ ax.set_ylabel("Feedback energy fraction $f_E$ []")
 
 ax.text(
     0.025,
-    0.025,
+    0.975,
     "\n".join([
-        "$f_E values:",
-        f"Min: {np.min(data.stars.feedback_energy_fractions.value):3.3f}",
-        f"Max: {np.max(data.stars.feedback_energy_fractions.value):3.3f}",
-        f"Mean: {np.mean(data.stars.feedback_energy_fractions.value):3.3f}",
-        f"Median: {np.median(data.stars.feedback_energy_fractions.value):3.3f}",
-    ])
+        "$f_E$ values:",
+        f"Min: {np.min(f_E_fractions):3.3f}",
+        f"Max: {np.max(f_E_fractions):3.3f}",
+        f"Mean: {np.mean(f_E_fractions):3.3f}",
+        f"Median: {np.median(f_E_fractions):3.3f}",
+    ]),
     transform=ax.transAxes,
     ha="left",
-    va="bottom",
+    va="top",
     fontsize=6,
 )
 

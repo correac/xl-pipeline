@@ -20,7 +20,9 @@ source env/bin/activate
 pip3 install -r requirements.txt
 ```
 
-This you will now have all of the required packages installed.
+This you will now have all of the required packages installed. If you
+already have the correct packages installed on your system, you can
+probably skip this step.
 
 You will also need to initialise and load the submodule with the
 comparison data:
@@ -52,6 +54,64 @@ OMP_NUM_THREADS=4
 ```
 This sets the number of threads for the image making.
 
+Generating simple output
+------------------------
+
+If all you require is halo catalogue plots (e.g. the stellar mass
+function, or stellar mass-halo mass relation), all you will need
+to do is run the velociraptor-python command:
+
+```
+  velociraptor-plot \
+    -c auto_plotter/*.yml \
+    -r registration.py \
+    -p path/to/your/catalogue.properties \
+    -o output/path/for/plots \
+    -f png \
+    -m output/path/for/plots/data.yml \
+    -s mnras.mplstyle
+```
+
+Then you can use the included `useful_extras/create_comparison.py`
+script if you wish to overlay several lines on a single figure.
+
+For instance, you may have a folder of many runs called `Run1`, `Run2`,
+etc. and you want to make plots for each of these. You could of course
+run the whole pipeline, but that includes many plots that you may not
+find useful. So, to run just the velociraptor catalogue plots, you can
+do the following:
+
+```bash
+# Clone repo
+git clone https://github.com/jborrow/xl-pipeline.git
+cd xl-pipeline
+
+# Grab comparison data
+cd velociraptor-comparison-data
+git pull origin master
+bash convert.sh
+cd ..
+
+# Create plots for each
+for run in {1..10}
+do
+  # Assuming the VR catalogue is Run{x}/stf/stf_0004.properties
+  run_name="Run${run}"
+  output_directory="../plots/${run_name}"
+  catalogue_path="../${run_name}/stf/stf_0004.properties"
+  
+  mkdir -p $output_directory
+  
+  velociraptor-plot \
+    -c auto_plotter/*.yml \
+    -r registration.py \
+    -p $catalogue_path \
+    -o $output_directory \
+    -f png \
+    -m $output_directory/data.yml \
+    -s mnras.mplstyle
+done
+```
 
 Output
 ------
