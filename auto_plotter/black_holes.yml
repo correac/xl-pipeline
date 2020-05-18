@@ -7,9 +7,9 @@ stellar_mass_black_hole_mass_30:
     start: 1e7
     end: 1e12
   y:
-    quantity: "masses.m_bh"
+    quantity: "black_hole_masses.max"
     units: Solar_Mass
-    start: 1e6
+    start: 1e5
     end: 1e11
   median:
     plot: true
@@ -38,9 +38,9 @@ stellar_mass_black_hole_mass_100:
     start: 1e7
     end: 1e12
   y:
-    quantity: "masses.m_bh"
+    quantity: "black_hole_masses.max"
     units: Solar_Mass
-    start: 1e6
+    start: 1e5
     end: 1e11
   median:
     plot: true
@@ -69,9 +69,9 @@ stellar_veldisp_black_hole_mass_10:
     start: 50
     end: 1e3
   y:
-    quantity: "masses.m_bh"
+    quantity: "black_hole_masses.max"
     units: Solar_Mass
-    start: 1e6
+    start: 1e5
     end: 1e11
   median:
     plot: true
@@ -98,9 +98,9 @@ stellar_veldisp_black_hole_mass_30:
     start: 50
     end: 1e3
   y:
-    quantity: "masses.m_bh"
+    quantity: "black_hole_masses.max"
     units: Solar_Mass
-    start: 1e6
+    start: 1e5
     end: 1e11
   median:
     plot: true
