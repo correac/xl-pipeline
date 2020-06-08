@@ -25,6 +25,8 @@ aperture_sizes = [30, 100]
 marginal_ssfr = unyt.unyt_quantity(1e-11, units=1 / unyt.year)
 
 for aperture_size in aperture_sizes:
+    halo_mass = catalogue.masses.mass_200crit
+
     stellar_mass = getattr(catalogue.apertures, f"mass_star_{aperture_size}_kpc")
     # Need to mask out zeros, otherwise we get RuntimeWarnings
     good_stellar_mass = stellar_mass > unyt.unyt_quantity(0.0, stellar_mass.units)
@@ -46,10 +48,13 @@ for aperture_size in aperture_sizes:
     is_active = 1.0 - is_passive
     is_active.name = "Active Fraction"
 
+    sfr_M200 = star_formation_rate / halo_mass
+    sfr_M200.name = "Star formation rate divided by halo mass"
+
     setattr(self, f"specific_sfr_gas_{aperture_size}_kpc", ssfr)
     setattr(self, f"is_passive_{aperture_size}_kpc", is_passive)
     setattr(self, f"is_active_{aperture_size}_kpc", is_active)
-
+    setattr(self, f"sfr_halo_mass_{aperture_size}_kpc", sfr_M200)
 
 # Now metallicities relative to different units
 
