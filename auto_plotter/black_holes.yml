@@ -60,6 +60,33 @@ stellar_mass_black_hole_mass_100:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassBlackHoleMass/McConnell2013_Fit.hdf5
 
 
+halo_mass_black_hole_mass:
+  type: "scatter"
+  legend_loc: "upper left"
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  y:
+    quantity: "black_hole_masses.max"
+    units: Solar_Mass
+    start: 1e5
+    end: 1e11
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e9
+      units: Solar_Mass
+    end:
+      value: 1e14
+      units: Solar_Mass
+  metadata:
+    title: Halo Mass-Black Hole Mass relation
+
+
 stellar_veldisp_black_hole_mass_10:
   type: "scatter"
   legend_loc: "upper left"
