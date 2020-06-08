@@ -145,10 +145,10 @@ halo_mass_specific_sfr_30:
     log: true
     number_of_bins: 25
     start:
-      value: 1e7
+      value: 1e9
       units: solar_mass
     end:
-      value: 1e12
+      value: 1e14
       units: solar_mass
     lower:
       value: 1.01e-11
@@ -177,10 +177,10 @@ halo_mass_specific_sfr_100:
     log: true
     number_of_bins: 25
     start:
-      value: 1e7
+      value: 1e9
       units: solar_mass
     end:
-      value: 1e12
+      value: 1e14
       units: solar_mass
     lower:
       value: 1.01e-11
@@ -245,7 +245,7 @@ halo_mass_sfr_100_halo_mass:
       units: solar_mass
   metadata:
     title: Star Formation Rate divided by Halo Mass (100 kpc) - Halo Mass
-    
+
 stellar_mass_passive_fraction_30:
   type: "scatter"
   legend_loc: "lower left"
