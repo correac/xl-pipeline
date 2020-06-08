@@ -30,6 +30,7 @@ MathJax.Hub.Config({
     <a href="#sfr">Star Formation Rates</a>
     <a href="#bh">Black Holes</a>
     <a href="#smhmr">Stellar Mass-Halo Mass Relation</a>
+    <a href="#sfr_halo">Star Formation Rate-Halo Mass Relation</a>
     <a href="#tullyfisher">Tully-Fisher</a>
     <a href="#metallicity">Gas and Stellar Metallicity</a>
     <a href="#rhot">Density-Temperature</a>
@@ -106,10 +107,14 @@ MathJax.Hub.Config({
         <div class="plots">
             <img class="plot" src="stellar_mass_black_hole_mass_100.png" />
             <img class="plot" src="stellar_veldisp_black_hole_mass_10.png" />
+            <img class="plot" src="halo_mass_black_hole_mass.png" />
         </div>
         <p>
             Black-hole related quantities. Note that the stellar velocity
             dispersion is measured in observations in a fixed 1 kpc aperture.
+            The third figure relates the black hole masses directly to the halo
+            masses, allowing for cross-model comparisons as the halo masses are 
+            largely unaffected by baryonic processes.
         </p>
     </div>
 
@@ -126,6 +131,19 @@ MathJax.Hub.Config({
             centrals only. The third figure shows the ratio between stellar
             mass and halo mass against halo mass, with the fourth showing the
             same but plotted against galaxy stellar mass instead.
+        </p>
+    </div>
+
+    <div class="plotrow" id="sfr_halo">
+        <h1>Star Formation Rate-Halo Mass Relation</h1>
+        <div class="plots">
+            <img class="plot" src="halo_mass_specific_sfr_100.png" />
+            <img class="plot" src="halo_mass_sfr_100_halo_mass.png" />
+        </div>
+        <p>
+            Star formation rate related halo properties. The plots only include
+            active galaxies. Galaxies are said to be passive if the have a
+            specific star formation rate of 0.01 / Gyr or lower.
         </p>
     </div>
 

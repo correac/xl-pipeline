@@ -124,6 +124,128 @@ stellar_mass_specific_sfr_30:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassSpecificStarFormationRate/Bauer2013_StarForming.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassSpecificStarFormationRate/Chang2015.hdf5
 
+halo_mass_specific_sfr_30:
+  type: "scatter"
+  selection_mask: "derived_quantities.is_active_30_kpc"
+  comment: "Active only"
+  comment_loc: "lower right"
+  legend_loc: "lower left"
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  y:
+    quantity: "derived_quantities.specific_sfr_gas_30_kpc"
+    units: 1 / gigayear
+    start: 0.5e-2
+    end: 1e0
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e9
+      units: solar_mass
+    end:
+      value: 1e14
+      units: solar_mass
+    lower:
+      value: 1.01e-11
+      units: 1 / year
+  metadata:
+    title: Specific Star Formation Rate (30 kpc) - Halo Mass
+
+halo_mass_specific_sfr_100:
+  type: "scatter"
+  selection_mask: "derived_quantities.is_active_100_kpc"
+  comment: "Active only"
+  comment_loc: "lower right"
+  legend_loc: "lower left"
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  y:
+    quantity: "derived_quantities.specific_sfr_gas_100_kpc"
+    units: 1 / gigayear
+    start: 0.5e-2
+    end: 1e0
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e9
+      units: solar_mass
+    end:
+      value: 1e14
+      units: solar_mass
+    lower:
+      value: 1.01e-11
+      units: 1 / year
+  metadata:
+    title: Specific Star Formation Rate (100 kpc) - Halo Mass
+
+halo_mass_sfr_30_halo_mass:
+  type: "scatter"
+  selection_mask: "derived_quantities.is_active_30_kpc"
+  comment: "Active only"
+  comment_loc: "lower right"
+  legend_loc: "lower left"
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  y:
+    quantity: "derived_quantities.sfr_halo_mass_30_kpc"
+    units: 1 / gigayear
+    start: 0.5e-5
+    end: 1e-2
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e9
+      units: solar_mass
+    end:
+      value: 1e14
+      units: solar_mass
+  metadata:
+    title: Star Formation Rate divided by Halo Mass (30 kpc) - Halo Mass
+
+halo_mass_sfr_100_halo_mass:
+  type: "scatter"
+  selection_mask: "derived_quantities.is_active_100_kpc"
+  comment: "Active only"
+  comment_loc: "lower right"
+  legend_loc: "lower left"
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  y:
+    quantity: "derived_quantities.sfr_halo_mass_100_kpc"
+    units: 1 / gigayear
+    start: 0.5e-5
+    end: 1e-2
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e9
+      units: solar_mass
+    end:
+      value: 1e14
+      units: solar_mass
+  metadata:
+    title: Star Formation Rate divided by Halo Mass (100 kpc) - Halo Mass
+
 stellar_mass_passive_fraction_30:
   type: "scatter"
   legend_loc: "lower left"
