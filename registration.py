@@ -85,6 +85,11 @@ for aperture_size in aperture_sizes:
             getattr(catalogue.apertures, f"zmet_gas_sf_{aperture_size}_kpc")
             / solar_metal_mass_fraction
         )
+
+        # Handle scenario where metallicity is zero, as we are bounded
+        # by approx 1e-2 metal mass fraction anyway:
+        metal_mass_fraction_gas[metal_mass_fraction_gas < 1e-5] = 1e-5
+
         log_metal_mass_fraction_gas = np.log10(metal_mass_fraction_gas.value)
         twelve_plus_log_OH = unyt.unyt_array(
             twelve_plus_log_OH_solar + log_metal_mass_fraction_gas,
