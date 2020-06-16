@@ -8,42 +8,37 @@ source plot.sh
 source image.sh
 
 # You should have a python environment with requirements.txt installed
-source /cosma7/data/dp004/dc-borr1/NewPipeline/xl-pipeline/env/bin/activate
+source env/bin/activate
 
+# This script expects that you have one top-level directory,
+# $run_directory, containing multiple runs called $run_names.
+# It loops over them, and the snapshot numbers $snap_numbers,
+# assuming that you have snapshots named eagle_$snap_numbers, 
+# and halo catalogues named halo_$snap_numbers.properties.
+# It makes plots in $run_driectory/plots/snapshot_$snapnum/...
 
-export data_directories=(
-#  "/cosma7/data/dp004/jch/EAGLE-XL/ParameterSearch-Swift/sync_from_irene/eaglexl_parameter_search_25Mpc/Runs/Wave1_Design_120ptSLHC_60plus60_25Mpc/"
-#  "/cosma7/data/dp004/jch/EAGLE-XL/ParameterSearch-Swift/sync_from_irene/eaglexl_parameter_search_50Mpc_LowRes/Runs/Wave1_Design_120ptSLHC_60plus60_25Mpc"
-#  "/cosma7/data/dp004/jch/EAGLE-XL/ParameterSearch-Swift/cosma/25Mpc_low_res/eaglexl_parameter_search/Runs/Wave1_Design_120ptSLHC_60plus60_25Mpc/"
-#  "/cosma7/data/dp004/jch/EAGLE-XL/ParameterSearch-Swift/sync_from_irene/eaglexl_parameter_search_25Mpc_16ptLHC/Runs/Wave1_Design_16ptSLHC_50Mpc_and_25Mpc/"
-#  "/cosma7/data/dp004/jch/EAGLE-XL/ParameterSearch-Swift/sync_from_irene/eaglexl_parameter_search_50Mpc_16ptLHC/Runs/Wave1_Design_16ptSLHC_50Mpc_and_25Mpc/"
-#  "/cosma7/data/dp004/jch/EAGLE-XL/ParameterSearch-Swift/velociraptor_cosma/eaglexl_parameter_search_50Mpc_LowRes/output/"
-#  " /cosma7/data/dp004/jch/EAGLE-XL/ParameterSearch-Swift/velociraptor_cosma/eaglexl_parameter_search_50Mpc_LowRes_AGN_fix/output/"
-  "/cosma7/data/dp004/jch/EAGLE-XL/ParameterSearch-Swift/velociraptor_cosma/eaglexl_parameter_search_50Mpc_LowRes_16ptLHC/output/"
+export run_directory=/path/to/runs
+
+# Names of your runs that you wish to loop over (could just be one!)
+export run_names=(
+  MyFavouriteRun
 )
 
-export plot_directories=(
-#  "../Wave1_Design_120ptSLHC_60plus60_25Mpc"
-#  "../Wave1_Design_120ptSLHC_60plus60_50Mpc_LowRes"
-#  "../Wave1_Design_120ptSLHC_60plus60_25Mpc_LowRes"
-#  "../Wave1_Design_16ptSLHC_50Mpc_and_25Mpc_25Mpc"
-#  "../Wave1_Design_16ptSLHC_50Mpc_and_25Mpc_50Mpc"
-#  "../Wave1_Design_120ptSLHC_60plus60_50Mpc_LowRes_ReRun"
-#  "../Wave1_Design_16ptSLHC_50Mpc_and_25Mpc_50Mpc_LowRes_AGNFixed"
-  "../Wave1_Design_16ptSLHC_50Mpc_and_25Mpc_50Mpc_LowRes"
+# Snapshot numbers
+export snap_numbers=(
+  "0000"
+  "0001"
+  "0002"
 )
 
 plot_single_run () {
+  snapnum=$4
   run_name=$3
   plot_directory=$1
   data_directory=$2
   run_directory="${data_directory}/${run_name}"
-  snapshot_name="eagle_0004.hdf5"
-  catalogue_name="stf/stf_0004.properties.0"
-
-  echo $run_name
-  echo $plot_directory
-  echo $run_directory
+  snapshot_name="eagle_${snapnum}.hdf5"
+  catalogue_name="halo_${snapnum}.properties"
 
   mkdir -p $plot_directory/$run_name
 
@@ -58,12 +53,10 @@ plot_single_run () {
 
 export -f plot_single_run
 
-for i in ${!data_directories[@]}; do
-  data_directory=${data_directories[$i]}
-  plot_directory=${plot_directories[$i]}
-  baked_plot="plot_single_run ${plot_directory} ${data_directory}"
-
-  ls $data_directory | grep Run | parallel -n1 -j40 $baked_plot 
-
-  wait
+for run_name in ${run_names[@]}; do
+  for snapnum in ${snap_numbers[@]}; do
+    plot_directory=$run_directory/plots/snapshot_$snapnum
+    plot_single_run $plot_directory $run_directory $run_name $snapnum &
+ done;
+ wait;
 done;
