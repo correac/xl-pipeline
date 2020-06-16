@@ -126,8 +126,8 @@ create_summary_plot () {
   cd $output_path
 
   # Copy in the index.html file for summary web viewing
-  cp $run_directory/{colibre,eagle}_*.yml .
-  parameter_file_name=$(ls {colibre,eagle}_*.yml 2>/dev/null)
+  parameter_file_name=$(basename $(ls $run_directory/{colibre,eagle}_*.yml 2>/dev/null))
+  cp $run_directory/$parameter_file_name .
   chmod a+r $parameter_file_name
   cp $old_directory/data_conversion/index.html .
   echo "OLD, RUN, PFILE"

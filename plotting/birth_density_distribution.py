@@ -54,6 +54,9 @@ fig, ax = plt.subplots()
 ax.loglog()
 
 for index, (label, data) in enumerate(birth_densities_by_redshift.items()):
+    if len(data) < 1:
+        continue
+
     H, _ = np.histogram(data, bins=birth_density_bins)
     ax.plot(
         birth_density_centers,
