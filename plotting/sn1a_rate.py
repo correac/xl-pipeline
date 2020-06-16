@@ -19,6 +19,7 @@ sfr_output_units = unyt.msun / (unyt.year * unyt.Mpc ** 3)
 plt.style.use("mnras.mplstyle")
 
 import sys
+import os
 
 run_name = sys.argv[1]
 run_directory = sys.argv[2]
@@ -27,6 +28,9 @@ output_path = sys.argv[4]
 
 sn1a_filename = f"{run_directory}/SNIa.txt"
 snapshot_filename = f"{run_directory}/{snapshot_name}"
+
+if not os.path.exists(sn1a_filename):
+    exit(0)
 
 data = np.genfromtxt(sn1a_filename).T
 
