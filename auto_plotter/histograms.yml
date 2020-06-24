@@ -1,0 +1,96 @@
+stellar_mass_histogram_30:
+  type: "histogram"
+  legend_loc: "upper right"
+  number_of_bins: 25
+  x:
+    quantity: "apertures.mass_star_30_kpc"
+    units: Solar_Mass
+    start: 1e7
+    end: 1e12
+  metadata:
+    title: Stellar Mass Histogram (30 kpc aperture)
+
+stellar_mass_histogram_active_only_30:
+  type: "histogram"
+  legend_loc: "upper right"
+  comment: "Active only"
+  comment_loc: "lower right"
+  selection_mask: "derived_quantities.is_active_30_kpc"
+  number_of_bins: 25
+  x:
+    quantity: "apertures.mass_star_30_kpc"
+    units: Solar_Mass
+    start: 1e7
+    end: 1e12
+  metadata:
+    title: Stellar Mass Histogram (30 kpc aperture, active)
+
+stellar_mass_histogram_passive_only_30:
+  type: "histogram"
+  legend_loc: "upper right"
+  comment: "Passive only"
+  comment_loc: "lower right"
+  selection_mask: "derived_quantities.is_passive_30_kpc"
+  number_of_bins: 25
+  x:
+    quantity: "apertures.mass_star_30_kpc"
+    units: Solar_Mass
+    start: 1e7
+    end: 1e12
+  metadata:
+    title: Stellar Mass Histogram (30 kpc aperture, passive)
+
+stellar_mass_histogram_100:
+  type: "histogram"
+  legend_loc: "upper right"
+  number_of_bins: 25
+  x:
+    quantity: "apertures.mass_star_100_kpc"
+    units: Solar_Mass
+    start: 1e7
+    end: 1e12
+  metadata:
+    title: Stellar Mass Histogram (100 kpc aperture)
+
+stellar_mass_histogram_active_only_100:
+  type: "histogram"
+  legend_loc: "upper right"
+  comment: "Active only"
+  comment_loc: "lower right"
+  selection_mask: "derived_quantities.is_active_100_kpc"
+  number_of_bins: 25
+  x:
+    quantity: "apertures.mass_star_100_kpc"
+    units: Solar_Mass
+    start: 1e7
+    end: 1e12
+  metadata:
+    title: Stellar Mass Histogram (100 kpc aperture, active)
+
+stellar_mass_histogram_passive_only_100:
+  type: "histogram"
+  legend_loc: "upper right"
+  comment: "Passive only"
+  comment_loc: "lower right"
+  selection_mask: "derived_quantities.is_passive_100_kpc"
+  number_of_bins: 25
+  x:
+    quantity: "apertures.mass_star_100_kpc"
+    units: Solar_Mass
+    start: 1e7
+    end: 1e12
+  metadata:
+    title: Stellar Mass Histogram (100 kpc aperture, passive)
+
+halo_mass_m200crit_histogram:
+  type: "histogram"
+  legend_loc: "upper right"
+  number_of_bins: 25
+  x:
+    quantity: "masses.mass_200crit"
+    units: Solar_Mass
+    start: 1e9
+    end: 1e14
+  metadata:
+    title: "Halo Mass Histogram ($M_{200, crit}$)"
+
