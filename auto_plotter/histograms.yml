@@ -108,3 +108,16 @@ halo_mass_m200crit_histogram:
   metadata:
     title: "Halo Mass Histogram ($M_{200, crit}$)"
 
+black_hole_mass_histogram:
+  type: "histogram"
+  legend_loc: "upper right"
+  number_of_bins: 25
+  x:
+    quantity: "black_hole_masses.max"
+    units: Solar_Mass
+    start: 1e5
+    end: 1e11
+  histogram:
+    scatter: "none"
+  metadata:
+    title: "Black Hole Mass Histogram (Max, subgrid)"

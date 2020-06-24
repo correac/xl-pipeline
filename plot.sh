@@ -33,7 +33,7 @@ plot_run () {
     -o $output_path \
     -f png \
     -m $output_path/data.yml \
-    -s mnras.mplstyle
+    -s mnras.mplstyle > /dev/null
 
   python3 plotting/star_formation_history.py \
     $run_name \
@@ -130,8 +130,6 @@ create_summary_plot () {
   cp $run_directory/$parameter_file_name .
   chmod a+r $parameter_file_name
   cp $old_directory/data_conversion/index.html .
-  echo "OLD, RUN, PFILE"
-  echo $old_directory $run_directory $parameter_file_name
 
   python3 $old_directory/data_conversion/parameters.py $parameter_file_name
   python3 $old_directory/data_conversion/catalogue.py
