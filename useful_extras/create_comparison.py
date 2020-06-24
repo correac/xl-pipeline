@@ -59,8 +59,11 @@ def load_yaml_line_data(
     data = {}
 
     for path, name in zip(paths, names):
-        with open(path, "r") as handle:
-            data[name] = yaml.load(handle, Loader=yaml.Loader)
+        try:
+            with open(path, "r") as handle:
+                data[name] = yaml.load(handle, Loader=yaml.Loader)
+        except (OSError, FileNotFoundError):
+            data[name] = {}
 
     return data
 
@@ -152,8 +155,15 @@ def recreate_single_figure(
     if plot.y_log:
         ax.set_yscale("log")
 
-    ax.set_xlim(*unyt.unyt_array(plot.x_lim, units=plot.x_units))
-    ax.set_ylim(*unyt.unyt_array(plot.y_lim, units=plot.y_units))
+    try:
+        ax.set_xlim(*unyt.unyt_array(plot.x_lim, units=plot.x_units))
+    except AttributeError:
+        pass
+
+    try:
+        ax.set_ylim(*unyt.unyt_array(plot.y_lim, units=plot.y_units))
+    except AttributeError:
+        pass
 
     decorate_axes(
         ax,
