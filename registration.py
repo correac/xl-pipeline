@@ -20,6 +20,7 @@ This file calculates:
         Metallicity in solar units (relative to metal_mass_fraction).
     + stellar_mass_to_halo_mass_{x}_kpc for 30 and 100 kpc
         Stellar Mass / Halo Mass (mass_200crit) for 30 and 100 kpc apertures.
+    + stellar_ages_yr (no aperture) to assign correct units to the field.
 """
 
 aperture_sizes = [30, 100]
@@ -117,3 +118,9 @@ for aperture_size in aperture_sizes:
     smhm.name = name
 
     setattr(self, f"stellar_mass_to_halo_mass_{aperture_size}_kpc", smhm)
+
+
+stellar_ages = getattr(catalogue.stellar_age, "tage_star")
+stellar_ages = unyt.unyt_array(stellar_ages, units="yr")
+stellar_ages.name = "Mean Stellar Ages $t_*$"
+setattr(self, "stellar_ages_yr", stellar_ages)

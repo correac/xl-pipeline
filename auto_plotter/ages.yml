@@ -1,0 +1,58 @@
+stellar_mass_stellar_ages_30:
+  type: "scatter"
+  legend_loc: "lower right"
+  y:
+    quantity: "derived_quantities.stellar_ages_yr"
+    log: true
+    units: "yr"
+    start: 1e8
+    end: 2e10
+  x:
+    quantity: "apertures.mass_star_30_kpc"
+    units: solar_mass
+    start: 1e7
+    end: 1e12
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e7
+      units: solar_mass
+    end:
+      value: 1e12
+      units: solar_mass
+  metadata:
+    title: "Stellar mass - Stellar ages (30 kpc aperture)"
+  observational_data:
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassStellarAges/Gallazzi2005_Data.hdf5
+
+stellar_mass_stellar_ages_100:
+  type: "scatter"
+  legend_loc: "lower right"
+  y:
+    quantity: "derived_quantities.stellar_ages_yr"
+    log: true
+    units: "yr"
+    start: 1e8
+    end: 2e10
+  x:
+    quantity: "apertures.mass_star_100_kpc"
+    units: solar_mass
+    start: 1e7
+    end: 1e12
+  median:
+    plot: true
+    log: true
+    number_of_bins: 25
+    start:
+      value: 1e7
+      units: solar_mass
+    end:
+      value: 1e12
+      units: solar_mass
+  metadata:
+    title: "Stellar mass - Stellar ages (100 kpc aperture)"
+  observational_data:
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassStellarAges/Gallazzi2005_Data.hdf5
+
