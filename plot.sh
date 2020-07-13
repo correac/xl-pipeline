@@ -59,6 +59,12 @@ plot_run () {
     $snapshot_name \
     $output_path
 
+  python3 plotting/density_pressure.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $output_path
+
   python3 plotting/density_temperature_metals.py \
     $run_name \
     $run_directory \
