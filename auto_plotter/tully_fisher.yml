@@ -25,6 +25,7 @@ tully_fisher_100:
     title: Tully-Fisher (stellar mass, 100 kpc)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/TullyFisherRelation/AvilaReese2008.hdf5
+    - filename: ./velociraptor-comparison-data/data/TullyFisherRelation/Reyes2011.hdf5
 
 tully_fisher_30:
   type: "scatter"
@@ -53,3 +54,4 @@ tully_fisher_30:
     title: Tully-Fisher (stellar mass, 100 kpc)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/TullyFisherRelation/AvilaReese2008.hdf5
+    - filename: ./velociraptor-comparison-data/data/TullyFisherRelation/Reyes2011.hdf5
