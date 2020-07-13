@@ -29,6 +29,7 @@ stellar_mass_gas_sf_metallicity_30:
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassGasMetallicity/Tremonti2004_Data.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassGasMetallicity/Zahid2014_Data.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassGasMetallicity/Andrews2013_Data.hdf5
 
 stellar_mass_gas_sf_metallicity_100:
   type: "scatter"
@@ -61,6 +62,7 @@ stellar_mass_gas_sf_metallicity_100:
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassGasMetallicity/Tremonti2004_Data.hdf5
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassGasMetallicity/Zahid2014_Data.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassGasMetallicity/Andrews2013_Data.hdf5
 
 stellar_mass_star_metallicity_100:
   type: "scatter"
