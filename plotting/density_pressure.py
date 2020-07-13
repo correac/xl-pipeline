@@ -27,10 +27,8 @@ def get_data(filename):
 
     data = load(filename)
 
-    pressure_factor = float(data.gas.pressures.cosmo_factor.a_factor)
-
     number_density = (data.gas.densities.to_physical() / mh).to(cm ** -3)
-    pressure = (data.gas.pressures * (pressure_factor / kb)).to(K * cm ** -3)
+    pressure = (data.gas.pressures.to_physical() / kb).to(K * cm ** -3)
 
     return number_density.value, pressure.value
 
