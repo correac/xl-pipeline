@@ -13,7 +13,7 @@ from matplotlib.animation import FuncAnimation
 
 # Constants; these could be put in the parameter file but are rarely changed.
 density_bounds = [10 ** (-9.5), 1e6]  # in nh/cm^3
-pressure_bounds = [10 ** (-4), 10 ** (10)]  # in K/cm^2
+pressure_bounds = [10 ** (-4), 10 ** (10)]  # in K/cm^3
 bins = 256
 
 # Plotting controls
@@ -65,7 +65,7 @@ def setup_axes():
     fig, ax = plt.subplots(1)
 
     ax.set_xlabel("Density [$n_H$ cm$^{-3}$]")
-    ax.set_ylabel("Pressure [K cm$^{-3}$]")
+    ax.set_ylabel("Pressure $P / k_B$ [K cm$^{-3}$]")
 
     ax.loglog()
 
