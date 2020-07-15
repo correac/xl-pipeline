@@ -55,7 +55,8 @@ stellar_mass_halo_mass_centrals_100:
     title: Stellar Mass-Halo Mass relation (100 kpc aperture, centrals only)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
-
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Schaye2015_Ref_100_z0p0.hdf5
+      
 stellar_mass_halo_mass_centrals_ratio_100:
   type: "scatter"
   select_structure_type: 10
@@ -85,6 +86,7 @@ stellar_mass_halo_mass_centrals_ratio_100:
     title: Stellar Mass-Halo Mass relation (ratio, 100 kpc aperture, centrals only)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013Ratio.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Schaye2015_Ref_100_z0p0_Ratio.hdf5
 
 stellar_mass_halo_mass_centrals_ratio_stellar_100:
   type: "scatter"
@@ -115,7 +117,7 @@ stellar_mass_halo_mass_centrals_ratio_stellar_100:
     title: Stellar Mass-Halo Mass relation (ratio, 100 kpc aperture, centrals only, stellar x-axis)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013RatioStellar.hdf5
-
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Schaye2015_Ref_100_z0p0_RatioStellar.hdf5
 
 stellar_mass_halo_mass_all_30:
   type: "2dhistogram"
@@ -174,6 +176,7 @@ stellar_mass_halo_mass_centrals_30:
     title: Stellar Mass-Halo Mass relation (30 kpc aperture, centrals only)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Schaye2015_Ref_100_z0p0.hdf5
 
 stellar_mass_halo_mass_centrals_ratio_30:
   type: "scatter"
@@ -204,6 +207,7 @@ stellar_mass_halo_mass_centrals_ratio_30:
     title: Stellar Mass-Halo Mass relation (ratio, 30 kpc aperture, centrals only)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013Ratio.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Schaye2015_Ref_100_z0p0_Ratio.hdf5
 
 stellar_mass_halo_mass_centrals_ratio_stellar_30:
   type: "scatter"
@@ -234,3 +238,4 @@ stellar_mass_halo_mass_centrals_ratio_stellar_30:
     title: Stellar Mass-Halo Mass relation (ratio, 30 kpc aperture, centrals only, stellar x-axis)
   observational_data:
     - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Moster2013RatioStellar.hdf5
+    - filename: ./velociraptor-comparison-data/data/GalaxyStellarMassHaloMass/Schaye2015_Ref_100_z0p0_RatioStellar.hdf5
