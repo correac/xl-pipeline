@@ -52,12 +52,64 @@ except KeyError:
 
 try:
     supernova_feedback = f"""
+        <li><b>SNII feedback parameters:</b></li>
         <li>$E = {parameter_file['COLIBREFeedback']['SNII_energy_erg']}$</li>
         <li>$f_{{\\rm E, min}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_min']:.4g}$</li>
         <li>$f_{{\\rm E, max}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_max']:.4g}$</li>
-        <li>$n_Z = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_Z']:.4g}$</li>
-        <li>$n_{{\\rm H, 0}} = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_0_H_p_cm3']:.4g}$</li>
-        <li>$n_n = {parameter_file['COLIBREFeedback']['SNII_energy_fraction_n_n']:.4g}$</li>"""
+    """
+    try:
+        supernova_feedback += f"""
+                <li>$f_{{\\rm kinetic}} = {parameter_file['COLIBREFeedback']['SNII_f_kinetic']}$</li>
+                <li>$v_{{\\rm kinetic}} = {parameter_file['COLIBREFeedback']['SNII_delta_v_km_p_s']}$ km/s</li>
+        """
+    except:
+        pass
+except KeyError:
+    pass
+
+# Star formation
+
+star_formation = ""
+
+try:
+    star_formation = f"""
+       <li><b>Star formation parameters:</b></li>
+       <li>Temperature ceiling: ${parameter_file['COLIBREStarFormation']['temperature_threshold_K']}$ K</li>
+       <li>SF model: ${parameter_file['COLIBREStarFormation']['SF_model']}$ </li>
+    """
+    try:
+        star_formation += f"""
+            <li>Virial parameter: ${parameter_file['COLIBREStarFormation']['alpha_virial']}$</li>
+        """
+    except KeyError:
+        pass
+    try:
+        star_formation += f"""
+            <li>$n_{{\\rm H, max}} = {parameter_file['COLIBREStarFormation']['threshold_max_density_H_p_cm3']} {{\\mathrm cm}}^{{\\rm -3}}$ (gas gets turned into star immediately)</li>
+        """
+    except KeyError:
+        pass
+    try:
+        star_formation += f"""
+            <li>$n_{{\\rm H, max, sub}} = {parameter_file['COLIBREStarFormation']['subgrid_density_threshold_H_p_CM3']} {{\\mathrm cm}}^{{\\rm -3}}$ (gas is star forming)</li>
+        """
+    except KeyError:
+        pass
+
+except KeyError:
+    pass
+
+
+# Entropy floor
+entropy_floor = ""
+
+try:
+    entropy_floor = f"""
+       <li><b>Entropy floor parameter:</b></li>
+       <li>$n_{{\\rm H, norm}} = {parameter_file['COLIBREEntropyFloor']['Jeans_density_norm_H_p_cm3']} \\mathrm{{cm}}^{{\\rm -3}}$ </li>
+       <li>$T_{{\\rm norm}}   = {parameter_file['COLIBREEntropyFloor']['Jeans_temperature_norm_K']}$ K </li>
+       <li>slope = ${parameter_file['COLIBREEntropyFloor']['Jeans_gamma_effective']}$</li>
+    """  
 except KeyError:
     pass
 
@@ -77,6 +129,7 @@ except KeyError:
 
 try:
     agn_feedback = f"""
+        <li><b>AGN parameters:</b></li>
         <li>
           AGN $\\mathrm{{d}}T = {parameter_file['COLIBREAGN']['AGN_delta_T_K']}$
           ($\\log_{{10}}(\\mathrm{{d}}T / K) = {log10(float(parameter_file['COLIBREAGN']['AGN_delta_T_K']))}$)
@@ -95,19 +148,39 @@ try:
 except KeyError:
     pass
 
+DM_to_baryon_ratio = int(round(data.metadata.n_dark_matter / (data.metadata.n_gas + data.metadata.n_stars)))
+
+if DM_to_baryon_ratio == 1:
+    particlenumbers = f"""
+    <li><b>Cube root of particle number</b>: {int(data.metadata.n_dark_matter**(1/3)+0.01)}</li>
+    <li><b>Number of particles at $z={data.metadata.z:2.2f}$</b>:
+      <ul>
+        <li>Dark matter: {data.metadata.n_dark_matter}</li>
+        <li>Gas: {data.metadata.n_gas}</li>
+        <li>Star: {data.metadata.n_stars}</li>
+        <li>Black hole: {data.metadata.n_black_holes}</li>
+      </ul>
+    </li>
+    """
+else:
+    particlenumbers = f"""
+    <li><b>Cube root of baryon particle number</b>: {int((data.metadata.n_gas + data.metadata.n_stars)**(1/3)+0.01)}</li>
+    <li><b>Ratio dark matter to baryon particles</b>: {int(DM_to_baryon_ratio)} </li>
+    <li><b>Number of particles at $z={data.metadata.z:2.2f}$</b>:
+      <ul>
+        <li>Dark matter: {data.metadata.n_dark_matter}</li>
+        <li>Gas: {data.metadata.n_gas}</li>
+        <li>Star: {data.metadata.n_stars}</li>
+        <li>Black hole: {data.metadata.n_black_holes}</li>
+      </ul>
+    </li>
+    """ 
+
 # Now generate HTML
 output = f"""<ul>
 <li><b>Run Name</b>: {run_name}</li>
 <li><b>Boxsize</b>: {str(data.metadata.boxsize)}</li>
-<li><b>Cube root of particle number</b>: {int(data.metadata.n_dark_matter**(1/3)+0.01)}</li>
-<li><b>Number of particles at $z={data.metadata.z:2.2f}$</b>:
-  <ul>
-    <li>Dark matter: {data.metadata.n_dark_matter}</li>
-    <li>Gas: {data.metadata.n_gas}</li>
-    <li>Star: {data.metadata.n_stars}</li>
-    <li>Black hole: {data.metadata.n_black_holes}</li>
-  </ul>
-</li>
+{particlenumbers}
 <li><b>Minimal particle masses at $z={data.metadata.z:2.2f}$</b>:
   <ul>
     <li>Dark matter: ${latex_float(data.dark_matter.masses[::100].min().to('Solar_Mass').value)}$ M$_\\odot$</li>
@@ -127,6 +200,8 @@ output = f"""<ul>
   <ul>
     {supernova_feedback}
     {agn_feedback}
+    {entropy_floor}
+    {star_formation}
   </ul>
 </ul>
 """
