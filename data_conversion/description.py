@@ -139,12 +139,81 @@ try:
     try:
         # Possible additional AGN parameters
         agn_feedback += f"""
-        <li>Subgrid quantities for Bondi = {parameter_file['COLIBREAGN']['subgrid_bondi']}</li>
-        <li>Multi-phase Bondi = {parameter_file['COLIBREAGN']['multi_phase_bondi']}</li>
         <li>Reposition base velocity = {parameter_file['COLIBREAGN']['reposition_coefficient_upsilon']}</li>
         """
     except KeyError:
         pass
+    try:
+        agn_feedback += f"""
+        <li>Subgrid seed mass (Msol) = {parameter_file['COLIBREAGN']['subgrid_seed_mass_Msun']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Number of neighbours to heat = {parameter_file['COLIBREAGN']['AGN_num_ngb_to_heat']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Use multi-phase Bondi = {parameter_file['COLIBREAGN']['use_multi_phase_bondi']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Use subgrid properties = {parameter_file['COLIBREAGN']['use_subgrid_gas_properties']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Use Krumholz+2006 accretion rates = {parameter_file['COLIBREAGN']['use_krumholz']}</li>
+        <li>Use Krumholz+2006 vorticity term  = {parameter_file['COLIBREAGN']['with_krumholz_vorticity']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Use Rosas-Guevara (2015) viscous time-scale reduction term = {parameter_file['COLIBREAGN']['with_angmom_limiter']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Coupling efficiency = {parameter_file['COLIBREAGN']['coupling_efficiency']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Maximal BH mass considered for BH repositioning (Msol) = {parameter_file['COLIBREAGN']['max_reposition_mass']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Only reposition to particles that move slowly w.r.t. the black hole = {parameter_file['COLIBREAGN']['with_reposition_velocity_threshold']}</li>
+        """
+    except KeyError:
+        pass
+
+    try:
+        agn_feedback += f"""
+        <li>Maximal velocity offset for repositioning (units of BH sound speed) = {parameter_file['COLIBREAGN']['max_reposition_velocity_ratio']}</li>
+        """
+    except KeyError:
+        pass
+
 except KeyError:
     pass
 
