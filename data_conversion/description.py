@@ -31,7 +31,7 @@ with open(sys.argv[2], "r") as handle:
     parameter_file = yaml.load(handle, Loader=yaml.Loader)
 
 try:
-    run_name = data.metadata.run_name.decode("utf-8").replace('!!python/unicode', '')
+    run_name = data.metadata.run_name.decode("utf-8").replace("!!python/unicode", "")
 except:
     run_name = ""
 
@@ -85,13 +85,15 @@ try:
         pass
     try:
         star_formation += f"""
-            <li>$n_{{\\rm H, max}} = {parameter_file['COLIBREStarFormation']['threshold_max_density_H_p_cm3']} {{\\mathrm cm}}^{{\\rm -3}}$ (gas gets turned into star immediately)</li>
+            <li>$n_{{\\rm H, max}} = {parameter_file['COLIBREStarFormation']['threshold_max_density_H_p_cm3']}$ cm$^3$
+            (gas gets turned into star immediately)</li>
         """
     except KeyError:
         pass
     try:
         star_formation += f"""
-            <li>$n_{{\\rm H, max, sub}} = {parameter_file['COLIBREStarFormation']['subgrid_density_threshold_H_p_CM3']} {{\\mathrm cm}}^{{\\rm -3}}$ (gas is star forming)</li>
+            <li>$n_{{\\rm H, max, sub}} = {parameter_file['COLIBREStarFormation']['subgrid_density_threshold_H_p_CM3']}$ cm$^3$
+            (gas is star forming)</li>
         """
     except KeyError:
         pass
@@ -106,10 +108,10 @@ entropy_floor = ""
 try:
     entropy_floor = f"""
        <li><b>Entropy floor parameter:</b></li>
-       <li>$n_{{\\rm H, norm}} = {parameter_file['COLIBREEntropyFloor']['Jeans_density_norm_H_p_cm3']} \\mathrm{{cm}}^{{\\rm -3}}$ </li>
+       <li>$n_{{\\rm H, norm}} = {parameter_file['COLIBREEntropyFloor']['Jeans_density_norm_H_p_cm3']}$ cm$^3$ </li>
        <li>$T_{{\\rm norm}}   = {parameter_file['COLIBREEntropyFloor']['Jeans_temperature_norm_K']}$ K </li>
-       <li>slope = ${parameter_file['COLIBREEntropyFloor']['Jeans_gamma_effective']}$</li>
-    """  
+       <li>Slope = ${parameter_file['COLIBREEntropyFloor']['Jeans_gamma_effective']}$</li>
+    """
 except KeyError:
     pass
 
@@ -195,21 +197,23 @@ try:
 
     try:
         agn_feedback += f"""
-        <li>Maximal BH mass considered for BH repositioning (Msol) = {parameter_file['COLIBREAGN']['max_reposition_mass']}</li>
+        <li>Maximal BH mass considered for BH repositioning = {parameter_file['COLIBREAGN']['max_reposition_mass']} M$_\\odot$</li>
         """
     except KeyError:
         pass
 
     try:
         agn_feedback += f"""
-        <li>Only reposition to particles that move slowly w.r.t. the black hole = {parameter_file['COLIBREAGN']['with_reposition_velocity_threshold']}</li>
+        <li>Only reposition to particles that move slowly w.r.t. the black hole =
+        {parameter_file['COLIBREAGN']['with_reposition_velocity_threshold']}</li>
         """
     except KeyError:
         pass
 
     try:
         agn_feedback += f"""
-        <li>Maximal velocity offset for repositioning (units of BH sound speed) = {parameter_file['COLIBREAGN']['max_reposition_velocity_ratio']}</li>
+        <li>Maximal velocity offset for repositioning (units of BH sound speed) =
+        {parameter_file['COLIBREAGN']['max_reposition_velocity_ratio']}</li>
         """
     except KeyError:
         pass
@@ -217,33 +221,23 @@ try:
 except KeyError:
     pass
 
-DM_to_baryon_ratio = int(round(data.metadata.n_dark_matter / (data.metadata.n_gas + data.metadata.n_stars)))
+DM_to_baryon_ratio = int(
+    round(data.metadata.n_dark_matter / (data.metadata.n_gas + data.metadata.n_stars))
+)
 
-if DM_to_baryon_ratio == 1:
-    particlenumbers = f"""
-    <li><b>Cube root of particle number</b>: {int(data.metadata.n_dark_matter**(1/3)+0.01)}</li>
-    <li><b>Number of particles at $z={data.metadata.z:2.2f}$</b>:
-      <ul>
-        <li>Dark matter: {data.metadata.n_dark_matter}</li>
-        <li>Gas: {data.metadata.n_gas}</li>
-        <li>Star: {data.metadata.n_stars}</li>
-        <li>Black hole: {data.metadata.n_black_holes}</li>
-      </ul>
-    </li>
-    """
-else:
-    particlenumbers = f"""
-    <li><b>Cube root of baryon particle number</b>: {int((data.metadata.n_gas + data.metadata.n_stars)**(1/3)+0.01)}</li>
-    <li><b>Ratio dark matter to baryon particles</b>: {int(DM_to_baryon_ratio)} </li>
-    <li><b>Number of particles at $z={data.metadata.z:2.2f}$</b>:
-      <ul>
-        <li>Dark matter: {data.metadata.n_dark_matter}</li>
-        <li>Gas: {data.metadata.n_gas}</li>
-        <li>Star: {data.metadata.n_stars}</li>
-        <li>Black hole: {data.metadata.n_black_holes}</li>
-      </ul>
-    </li>
-    """ 
+particlenumbers = f"""
+<li><b>Cube root of dark matter particle number</b>: {int(data.metadata.n_dark_matter**(1/3)+0.01)}</li>
+<li><b>Cube root of baryon particle number</b>: {int((data.metadata.n_gas + data.metadata.n_stars)**(1/3)+0.01)}</li>
+<li><b>Ratio dark matter to baryon particles</b>: {int(DM_to_baryon_ratio)} </li>
+<li><b>Number of particles at $z={data.metadata.z:2.2f}$</b>:
+    <ul>
+    <li>Dark matter: {data.metadata.n_dark_matter}</li>
+    <li>Gas: {data.metadata.n_gas}</li>
+    <li>Star: {data.metadata.n_stars}</li>
+    <li>Black hole: {data.metadata.n_black_holes}</li>
+    </ul>
+</li>
+"""
 
 # Now generate HTML
 output = f"""<ul>
