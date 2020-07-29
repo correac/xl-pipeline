@@ -123,12 +123,8 @@ def recreate_single_figure(
                 additional_y = unyt.unyt_array(this_line_dict.get("additional_points_y", []),
                                                units=plot.y_units)
 
-                if line.scatter == "none":
-                    (mpl_line,) = ax.plot(centers, heights, label=name)
-                    ax.scatter(additional_x, additional_y, s=5, c=mpl_line.get_color())
-                elif line.scatter == "errorbar":
+                if line.scatter == "errorbar":
                     (mpl_line, _, _) = ax.errorbar(centers, heights, yerr=errors, label=name)
-                    ax.scatter(additional_x, additional_y, s=5, c=mpl_line.get_color())
                 elif line.scatter == "shaded":
                     (mpl_line,) = ax.plot(centers, heights, label=name)
 
@@ -151,8 +147,12 @@ def recreate_single_figure(
                         alpha=0.3,
                         linewidth=0.0,
                     )
- 
-                    ax.scatter(additional_x, additional_y, s=5, c=mpl_line.get_color())
+
+                # line.scatter == "none":
+                else:
+                    (mpl_line,) = ax.plot(centers, heights, label=name)
+
+                ax.scatter(additional_x, additional_y, c=mpl_line.get_color())
 
 
     # Add observational data second to allow for colour precedence
