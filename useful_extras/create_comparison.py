@@ -117,6 +117,14 @@ def recreate_single_figure(
                 heights = unyt.unyt_array(this_line_dict["values"], units=plot.y_units)
                 errors = unyt.unyt_array(this_line_dict["scatter"], units=plot.y_units)
 
+                # Data points from the bins with too few data points
+                plot_additional = True
+                try:
+                    additional_x = unyt.unyt_array(this_line_dict["additional_points_x"], units=plot.x_units)
+                    additional_y = unyt.unyt_array(this_line_dict["additional_points_y"], units=plot.y_units)
+                except KeyError:
+                    plot_additional = False
+
                 if line.scatter == "none":
                     ax.plot(centers, heights, label=name)
                 elif line.scatter == "errorbar":
@@ -143,6 +151,10 @@ def recreate_single_figure(
                         alpha=0.3,
                         linewidth=0.0,
                     )
+ 
+                    if plot_additional:
+                        ax.scatter(additional_x, additional_y, s=5, c = mpl_line.get_color())
+
 
     # Add observational data second to allow for colour precedence
     # to go to runs
