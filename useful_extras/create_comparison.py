@@ -62,6 +62,23 @@ def load_yaml_line_data(
         try:
             with open(path, "r") as handle:
                 data[name] = yaml.load(handle, Loader=yaml.Loader)
+                   
+                # Do we have stellar mass function plots?
+                keys = [key for key in data[name].keys() if key.startswith("stellar_mass_function")]
+                
+                # Any results?
+                for key in keys:
+
+                    # Are we plotting the adaptive mass function?
+                    adaptive = data[name][key]["lines"].get("adaptive_mass_function",[])
+
+                    # If so, change the key name from adaptive_mass_function to mass_function
+                    if adaptive:
+
+                        print("double inside")
+                        data[name][key]["lines"]["mass_function"] = adaptive
+                        data[name][key]["lines"].pop("adaptive_mass_function")
+                
         except (OSError, FileNotFoundError):
             data[name] = {}
 
@@ -103,7 +120,6 @@ def recreate_single_figure(
         fake_catalogue = FakeCatalogue()
 
     fig, ax = plt.subplots()
-
     # Add simulation data
     for line_type in valid_line_types:
         line = getattr(plot, f"{line_type}_line", None)
@@ -122,7 +138,13 @@ def recreate_single_figure(
                                                units=plot.x_units)
                 additional_y = unyt.unyt_array(this_line_dict.get("additional_points_y", []),
                                                units=plot.y_units)
-
+               
+                # Do not plot individual points in the range containing binned data 
+                if this_line_dict["centers"]:
+                    above_below = (additional_x < centers[0]) + (additional_x > centers[-1])
+                else:
+                    above_below = additional_x == additional_x
+ 
                 if line.scatter == "errorbar":
                     (mpl_line, _, _) = ax.errorbar(centers, heights, yerr=errors, label=name)
                 elif line.scatter == "shaded":
@@ -152,7 +174,7 @@ def recreate_single_figure(
                 else:
                     (mpl_line,) = ax.plot(centers, heights, label=name)
 
-                ax.scatter(additional_x, additional_y, c=mpl_line.get_color())
+                ax.scatter(additional_x[above_below], additional_y[above_below], c=mpl_line.get_color())
 
 
     # Add observational data second to allow for colour precedence
