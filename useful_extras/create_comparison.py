@@ -66,16 +66,14 @@ def load_yaml_line_data(
                 # Do we have stellar mass function plots?
                 keys = [key for key in data[name].keys() if key.startswith("stellar_mass_function")]
                 
-                # Any results?
+                # Anything there?
                 for key in keys:
 
                     # Are we plotting the adaptive mass function?
                     adaptive = data[name][key]["lines"].get("adaptive_mass_function",[])
 
-                    # If so, change the key name from adaptive_mass_function to mass_function
+                    # If so, change the key from adaptive_mass_function to mass_function
                     if adaptive:
-
-                        print("double inside")
                         data[name][key]["lines"]["mass_function"] = adaptive
                         data[name][key]["lines"].pop("adaptive_mass_function")
                 
