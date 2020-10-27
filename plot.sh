@@ -35,6 +35,13 @@ plot_run () {
     -m $output_path/data.yml \
     -s mnras.mplstyle > /dev/null
 
+  python3 plotting/stellar_mass_mean_stellar_FeH.py \
+    $run_name \
+    $run_directory \
+    $snapshot_name \
+    $catalogue_name \
+    $output_path
+
   python3 plotting/star_formation_history.py \
     $run_name \
     $run_directory \
